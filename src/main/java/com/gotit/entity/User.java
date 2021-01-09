@@ -1,15 +1,16 @@
 package com.gotit.entity;
 
 import com.gotit.enumerate.AccountType;
+import org.springframework.security.core.GrantedAuthority;
+import org.springframework.security.core.userdetails.UserDetails;
 
-import javax.persistence.Entity;
-import javax.persistence.GeneratedValue;
-import javax.persistence.Id;
+import javax.persistence.*;
 import java.time.LocalDate;
+import java.util.Collection;
 import java.util.Objects;
 
 @Entity
-public class User {
+public class User implements UserDetails {
 
     @Id
     @GeneratedValue
@@ -17,20 +18,21 @@ public class User {
     private String email;
     private String password;
     private String name;
-    private String surName;
+    private String surname;
     private String accountDescription;
     private LocalDate accountCreationDate;
     private String avatar;
+    @Enumerated(EnumType.STRING)
     private AccountType accountType;
 
     public User() {
     }
 
-    public User(String email, String password, String name, String surName, String accountDescription, LocalDate accountCreationDate, String avatar, AccountType accountType) {
+    public User(String email, String password, String name, String surname, String accountDescription, LocalDate accountCreationDate, String avatar, AccountType accountType) {
         this.email = email;
         this.password = password;
         this.name = name;
-        this.surName = surName;
+        this.surname = surname;
         this.accountDescription = accountDescription;
         this.accountCreationDate = accountCreationDate;
         this.avatar = avatar;
@@ -53,8 +55,38 @@ public class User {
         this.email = email;
     }
 
+    @Override
+    public Collection<? extends GrantedAuthority> getAuthorities() {
+        return null;
+    }
+
     public String getPassword() {
         return password;
+    }
+
+    @Override
+    public String getUsername() {
+        return email;
+    }
+
+    @Override
+    public boolean isAccountNonExpired() {
+        return true;
+    }
+
+    @Override
+    public boolean isAccountNonLocked() {
+        return true;
+    }
+
+    @Override
+    public boolean isCredentialsNonExpired() {
+        return true;
+    }
+
+    @Override
+    public boolean isEnabled() {
+        return true;
     }
 
     public void setPassword(String password) {
@@ -69,12 +101,12 @@ public class User {
         this.name = name;
     }
 
-    public String getSurName() {
-        return surName;
+    public String getSurname() {
+        return surname;
     }
 
-    public void setSurName(String surName) {
-        this.surName = surName;
+    public void setSurname(String surName) {
+        this.surname = surName;
     }
 
     public String getAccountDescription() {
@@ -118,7 +150,7 @@ public class User {
                 Objects.equals(email, user.email) &&
                 Objects.equals(password, user.password) &&
                 Objects.equals(name, user.name) &&
-                Objects.equals(surName, user.surName) &&
+                Objects.equals(surname, user.surname) &&
                 Objects.equals(accountDescription, user.accountDescription) &&
                 Objects.equals(accountCreationDate, user.accountCreationDate) &&
                 Objects.equals(avatar, user.avatar) &&
@@ -127,6 +159,6 @@ public class User {
 
     @Override
     public int hashCode() {
-        return Objects.hash(id, email, password, name, surName, accountDescription, accountCreationDate, avatar, accountType);
+        return Objects.hash(id, email, password, name, surname, accountDescription, accountCreationDate, avatar, accountType);
     }
 }
