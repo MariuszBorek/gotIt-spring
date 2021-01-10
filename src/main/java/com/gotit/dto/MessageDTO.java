@@ -1,10 +1,10 @@
 package com.gotit.dto;
 
-public class Message {
+public class MessageDTO {
 
 	private String messageBody;
 
-	public Message(String messageBody) {
+	public MessageDTO(String messageBody) {
 		this.messageBody = messageBody;
 	}
 

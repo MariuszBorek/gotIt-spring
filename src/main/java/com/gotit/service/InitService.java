@@ -21,12 +21,35 @@ public class InitService {
 
     private void init() {
         createSampleUsers();
+        createCategories();
 
 
 
     }
 
     private void createCategories() {
+        Category category = new Category("Electronics", "computers, laptops and mobile phone", "avatar");
+        categoryRepository.save(category);
+        category = new Category("Fashion", "clothes and shoes", "avatar");
+        categoryRepository.save(category);
+        category = new Category("Home and Garden", "furniture, bathroom, bedroom and tools", "avatar");
+        categoryRepository.save(category);
+        category = new Category("Baby", "children's clothes and accessories", "avatar");
+        categoryRepository.save(category);
+        category = new Category("Toys", "lego bricks, car toys and dolls", "avatar");
+        categoryRepository.save(category);
+        category = new Category("Health", "cosmetics and perfumes", "avatar");
+        categoryRepository.save(category);
+        category = new Category("culture and entertainment", "art, comics and antique", "avatar");
+        categoryRepository.save(category);
+        category = new Category("sporting goods", "cycling, fishing and fitness", "avatar");
+        categoryRepository.save(category);
+        category = new Category("motors", "cars, bikes and boats", "avatar");
+        categoryRepository.save(category);
+        category = new Category("estate", "houses and property", "avatar");
+        categoryRepository.save(category);
+        category = new Category("company and services", "cleaning, manufacturing and office equipment", "avatar");
+        categoryRepository.save(category);
 
     }
 
@@ -50,15 +73,4 @@ public class InitService {
     }
 
 }
-//    ELECTRONICS,
-//    FASHION,
-//    HOME_AND_GARDEN,
-//    BABY,
-//    TOYS,
-//    HEALTH,
-//    CULTURE_AND_ENTERTAINMENT,
-//    SORTING_GOODS,
-//    MOTORS,
-//    ESTATE,
-//    COLLECTIBLES_AND_ART,
-//    COMPANY_AND_SERVICES
+

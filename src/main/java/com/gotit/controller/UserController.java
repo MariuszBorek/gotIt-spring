@@ -1,8 +1,7 @@
 package com.gotit.controller;
 
 import com.gotit.dto.UserDTO;
-import com.gotit.dto.Message;
-import com.gotit.entity.UserAccount;
+import com.gotit.dto.MessageDTO;
 import com.gotit.service.UserService;
 import org.springframework.web.bind.annotation.*;
 
@@ -18,8 +17,8 @@ public class UserController {
     }
 
     @GetMapping(path = "/validateLogin", produces = "application/json")
-    public Message validateLogin() {
-        return new Message("User successfully authenticated");
+    public MessageDTO validateLogin() {
+        return new MessageDTO("User successfully authenticated");
     }
 
     @PostMapping("/create")
