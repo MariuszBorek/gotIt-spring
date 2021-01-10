@@ -1,0 +1,21 @@
+package com.gotit.controller;
+
+
+import com.gotit.dto.Message;
+import org.springframework.web.bind.annotation.CrossOrigin;
+import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RestController;
+
+@CrossOrigin("*")
+@RestController
+@RequestMapping("/home")
+public class HomeController {
+
+
+    @GetMapping(path = "/validateLogin", produces = "application/json")
+    public Message validateLogin() {
+        return new Message("User successfully authenticated");
+    }
+
+}

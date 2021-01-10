@@ -1,4 +1,4 @@
-package com.gotit.entity;
+package com.gotit.dto;
 
 public class Message {
 

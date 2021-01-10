@@ -1,8 +1,8 @@
 package com.gotit.controller;
 
 import com.gotit.dto.UserDTO;
-import com.gotit.entity.Message;
-import com.gotit.entity.User;
+import com.gotit.dto.Message;
+import com.gotit.entity.UserAccount;
 import com.gotit.service.UserService;
 import org.springframework.web.bind.annotation.*;
 
@@ -29,8 +29,8 @@ public class UserController {
     }
 
     @GetMapping(path = "/profile/{email}", produces = "application/json")
-    public User getUserData(@PathVariable("email") final String email) {
-        return userService.getUser(email);
+    public UserDTO getUserData(@PathVariable("email") final String email) {
+        return userService.convertUserAccountEntityToUserDTO(userService.getUser(email));
     }
 
 }
