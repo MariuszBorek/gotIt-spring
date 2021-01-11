@@ -1,8 +1,7 @@
 package com.gotit.entity;
 
-import javax.persistence.Entity;
-import javax.persistence.GeneratedValue;
-import javax.persistence.Id;
+import javax.persistence.*;
+import java.util.List;
 import java.util.Objects;
 
 @Entity
@@ -14,6 +13,9 @@ public class Category {
     private String name;
     private String description;
     private String avatar;
+
+    @OneToMany(mappedBy = "category", fetch = FetchType.EAGER)
+    private List<Auction> auction;
 
     public Category() {
     }

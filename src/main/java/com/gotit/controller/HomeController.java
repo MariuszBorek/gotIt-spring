@@ -3,7 +3,9 @@ package com.gotit.controller;
 
 
 
+import com.gotit.dto.AuctionDTO;
 import com.gotit.dto.CategoryDTO;
+import com.gotit.service.AuctionService;
 import com.gotit.service.CategoryService;
 import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -19,14 +21,31 @@ import java.util.List;
 public class HomeController {
 
     private final CategoryService categoryService;
+    private final AuctionService auctionService;
 
-    public HomeController(CategoryService categoryService) {
+    public HomeController(CategoryService categoryService, AuctionService auctionService) {
         this.categoryService = categoryService;
+        this.auctionService = auctionService;
     }
 
     @GetMapping(path = "/categories", produces = "application/json")
-    public List<CategoryDTO> validateLogin() {
+    public List<CategoryDTO> getAllCategories() {
         return categoryService.convertCategoryEntityToCategoryDTO(categoryService.findAllCategories());
+    }
+
+    @GetMapping(path = "/last-added-auctions", produces = "application/json")
+    public List<AuctionDTO> getFiveLastAddedAuctions() {
+        return auctionService.findFiveLastAddedAuctions();
+    }
+
+    @GetMapping(path = "/ending-auctions", produces = "application/json")
+    public List<AuctionDTO> getFiveEndingAuctions() {
+        return auctionService.findFiveEndingAuctions();
+    }
+
+    @GetMapping(path = "/ended-auctions", produces = "application/json")
+    public List<AuctionDTO> getFiveEndedAuctions() {
+        return auctionService.findFiveEndedAuctions();
     }
 
 

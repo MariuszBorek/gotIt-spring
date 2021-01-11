@@ -1,13 +1,21 @@
 package com.gotit.entity;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
+
+import javax.persistence.*;
 import java.time.LocalDate;
 import java.util.Objects;
 
+@Entity
 public class Auction {
 
+    @Id
+    @GeneratedValue
     private Long id;
     private String description;
     private String photo;
+    @JsonIgnore
+    @ManyToOne(fetch = FetchType.EAGER)
     private Category category;
     private String minPrice;
     private String buyNowPrice;
@@ -81,7 +89,7 @@ public class Auction {
         this.buyNowPrice = buyNowPrice;
     }
 
-    public boolean isPromotedAuction() {
+    public boolean getPromotedAuction() {
         return promotedAuction;
     }
 
