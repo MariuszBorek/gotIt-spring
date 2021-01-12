@@ -33,20 +33,7 @@ public class HomeController {
         return categoryService.convertCategoryEntityToCategoryDTO(categoryService.findAllCategories());
     }
 
-    @GetMapping(path = "/last-added-auctions", produces = "application/json")
-    public List<AuctionDTO> getFiveLastAddedAuctions() {
-        return auctionService.findFiveLastAddedAuctions();
-    }
 
-    @GetMapping(path = "/ending-auctions", produces = "application/json")
-    public List<AuctionDTO> getFiveEndingAuctions() {
-        return auctionService.findFiveEndingAuctions();
-    }
-
-    @GetMapping(path = "/ended-auctions", produces = "application/json")
-    public List<AuctionDTO> getFiveEndedAuctions() {
-        return auctionService.findFiveEndedAuctions();
-    }
 
 
 

@@ -49,6 +49,7 @@ public class AuctionService {
 
     private AuctionDTO mapAuctionToAuctionDTO(Auction auction) {
         return new AuctionDTO().setId(auction.getId())
+                .setTitle(auction.getTitle())
                 .setDescription(auction.getDescription())
                 .setPhoto(auction.getPhoto())
                 .setCategory(auction.getCategory().getName())

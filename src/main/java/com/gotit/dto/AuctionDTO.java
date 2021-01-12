@@ -1,12 +1,12 @@
 package com.gotit.dto;
 
-import com.gotit.entity.Category;
 
 import java.time.LocalDate;
 
 public class AuctionDTO {
 
     private Long id;
+    private String title;
     private String description;
     private String photo;
     private String category;
@@ -21,8 +21,9 @@ public class AuctionDTO {
     public AuctionDTO() {
     }
 
-    public AuctionDTO(Long id, String description, String photo, String category, String minPrice, String buyNowPrice, boolean promotedAuction, String localization, LocalDate dateOfIssue, LocalDate endDate, int numberOfVisits) {
+    public AuctionDTO(String title, Long id, String description, String photo, String category, String minPrice, String buyNowPrice, boolean promotedAuction, String localization, LocalDate dateOfIssue, LocalDate endDate, int numberOfVisits) {
         this.id = id;
+        this.title = title;
         this.description = description;
         this.photo = photo;
         this.category = category;
@@ -41,6 +42,15 @@ public class AuctionDTO {
 
     public AuctionDTO setId(Long id) {
         this.id = id;
+        return this;
+    }
+
+    public String getTitle() {
+        return title;
+    }
+
+    public AuctionDTO setTitle(String title) {
+        this.title = title;
         return this;
     }
 
@@ -137,6 +147,7 @@ public class AuctionDTO {
     public AuctionDTO build() {
         AuctionDTO auctionDTO = new AuctionDTO();
         auctionDTO.id = id;
+        auctionDTO.title = title;
         auctionDTO.description = description;
         auctionDTO.photo = photo;
         auctionDTO.category = category;

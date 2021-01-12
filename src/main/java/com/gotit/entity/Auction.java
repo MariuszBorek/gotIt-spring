@@ -12,6 +12,7 @@ public class Auction {
     @Id
     @GeneratedValue
     private Long id;
+    private String title;
     private String description;
     private String photo;
     @JsonIgnore
@@ -28,7 +29,8 @@ public class Auction {
     public Auction() {
     }
 
-    public Auction(String description, String photo, Category category, String minPrice, String buyNowPrice, boolean promotedAuction, String localization, LocalDate dateOfIssue, LocalDate endDate, int numberOfVisits) {
+    public Auction(String title, String description, String photo, Category category, String minPrice, String buyNowPrice, boolean promotedAuction, String localization, LocalDate dateOfIssue, LocalDate endDate, int numberOfVisits) {
+        this.title = title;
         this.description = description;
         this.photo = photo;
         this.category = category;
@@ -47,6 +49,14 @@ public class Auction {
 
     public void setId(Long id) {
         this.id = id;
+    }
+
+    public String getTitle() {
+        return title;
+    }
+
+    public void setTitle(String title) {
+        this.title = title;
     }
 
     public String getDescription() {
@@ -137,9 +147,9 @@ public class Auction {
         return promotedAuction == auction.promotedAuction &&
                 numberOfVisits == auction.numberOfVisits &&
                 Objects.equals(id, auction.id) &&
+                Objects.equals(title, auction.title) &&
                 Objects.equals(description, auction.description) &&
                 Objects.equals(photo, auction.photo) &&
-                Objects.equals(category, auction.category) &&
                 Objects.equals(minPrice, auction.minPrice) &&
                 Objects.equals(buyNowPrice, auction.buyNowPrice) &&
                 Objects.equals(localization, auction.localization) &&
@@ -149,6 +159,6 @@ public class Auction {
 
     @Override
     public int hashCode() {
-        return Objects.hash(id, description, photo, category, minPrice, buyNowPrice, promotedAuction, localization, dateOfIssue, endDate, numberOfVisits);
+        return Objects.hash(id, title, description, photo, minPrice, buyNowPrice, promotedAuction, localization, dateOfIssue, endDate, numberOfVisits);
     }
 }
