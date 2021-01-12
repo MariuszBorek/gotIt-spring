@@ -6,6 +6,7 @@ import java.time.LocalDate;
 
 public class AuctionDTO {
 
+    private Long id;
     private String description;
     private String photo;
     private String category;
@@ -20,7 +21,8 @@ public class AuctionDTO {
     public AuctionDTO() {
     }
 
-    public AuctionDTO(String description, String photo, String category, String minPrice, String buyNowPrice, boolean promotedAuction, String localization, LocalDate dateOfIssue, LocalDate endDate, int numberOfVisits) {
+    public AuctionDTO(Long id, String description, String photo, String category, String minPrice, String buyNowPrice, boolean promotedAuction, String localization, LocalDate dateOfIssue, LocalDate endDate, int numberOfVisits) {
+        this.id = id;
         this.description = description;
         this.photo = photo;
         this.category = category;
@@ -31,6 +33,15 @@ public class AuctionDTO {
         this.dateOfIssue = dateOfIssue;
         this.endDate = endDate;
         this.numberOfVisits = numberOfVisits;
+    }
+
+    public Long getId() {
+        return id;
+    }
+
+    public AuctionDTO setId(Long id) {
+        this.id = id;
+        return this;
     }
 
     public String getDescription() {
@@ -125,6 +136,7 @@ public class AuctionDTO {
 
     public AuctionDTO build() {
         AuctionDTO auctionDTO = new AuctionDTO();
+        auctionDTO.id = id;
         auctionDTO.description = description;
         auctionDTO.photo = photo;
         auctionDTO.category = category;

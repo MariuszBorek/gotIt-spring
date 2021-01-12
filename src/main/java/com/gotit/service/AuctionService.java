@@ -38,8 +38,18 @@ public class AuctionService {
         return convertAuctionListToAuctionDTOList(auctions);
     }
 
+    public List<AuctionDTO> findFiveEndedAuctions() {
+        List<Auction> auctions = auctionRepository.findAll().stream()
+                .sorted(Comparator.comparing(Auction::getEndDate).reversed())
+                .filter((e) -> e.getEndDate().isBefore(LocalDate.now()))
+                .limit(5)
+                .collect(Collectors.toList());
+        return convertAuctionListToAuctionDTOList(auctions);
+    }
+
     private AuctionDTO mapAuctionToAuctionDTO(Auction auction) {
-        return new AuctionDTO().setDescription(auction.getDescription())
+        return new AuctionDTO().setId(auction.getId())
+                .setDescription(auction.getDescription())
                 .setPhoto(auction.getPhoto())
                 .setCategory(auction.getCategory().getName())
                 .setMinPrice(auction.getMinPrice())
@@ -60,12 +70,8 @@ public class AuctionService {
         return auctionsDTO;
     }
 
-    public List<AuctionDTO> findFiveEndedAuctions() {
-        List<Auction> auctions = auctionRepository.findAll().stream()
-                .sorted(Comparator.comparing(Auction::getEndDate).reversed())
-                .filter((e) -> e.getEndDate().isBefore(LocalDate.now()))
-                .limit(5)
-                .collect(Collectors.toList());
-        return convertAuctionListToAuctionDTOList(auctions);
+
+    public AuctionDTO findAuction(String id) {
+        return mapAuctionToAuctionDTO(auctionRepository.findById(Long.parseLong(id)).orElseThrow());
     }
 }
