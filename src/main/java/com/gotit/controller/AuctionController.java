@@ -17,6 +17,11 @@ public class AuctionController {
         this.auctionService = auctionService;
     }
 
+    @GetMapping(path = "/category/{category}", produces = "application/json")
+    public List<AuctionDTO> getCategoryProducts(@PathVariable("category") final String category) {
+        return auctionService.findCategoryProducts(category);
+    }
+
     @GetMapping(path = "/{id}", produces = "application/json")
     public AuctionDTO getFiveEndedAuctions(@PathVariable("id") final String id) {
         return auctionService.findAuction(id);

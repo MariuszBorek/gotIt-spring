@@ -3,21 +3,26 @@ package com.gotit.service;
 import com.gotit.dto.AuctionDTO;
 import com.gotit.entity.Auction;
 import com.gotit.entity.AuctionRepository;
+import com.gotit.entity.Category;
+import com.gotit.entity.CategoryRepository;
 import org.springframework.stereotype.Service;
 
 import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.Comparator;
 import java.util.List;
+import java.util.Optional;
 import java.util.stream.Collectors;
 
 @Service
 public class AuctionService {
 
     private final AuctionRepository auctionRepository;
+    private final CategoryRepository categoryRepository;
 
-    public AuctionService(AuctionRepository auctionRepository) {
+    public AuctionService(AuctionRepository auctionRepository, CategoryRepository categoryRepository) {
         this.auctionRepository = auctionRepository;
+        this.categoryRepository = categoryRepository;
     }
 
 
@@ -74,5 +79,10 @@ public class AuctionService {
 
     public AuctionDTO findAuction(String id) {
         return mapAuctionToAuctionDTO(auctionRepository.findById(Long.parseLong(id)).orElseThrow());
+    }
+
+    public List<AuctionDTO> findCategoryProducts(String categoryName) {
+        Category foundCategory = categoryRepository.findByName(categoryName).orElseThrow();
+        return convertAuctionListToAuctionDTOList(auctionRepository.findAllByCategory(foundCategory).orElseThrow());
     }
 }
