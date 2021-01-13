@@ -7,6 +7,7 @@ import org.springframework.security.core.userdetails.UserDetails;
 import javax.persistence.*;
 import java.time.LocalDate;
 import java.util.Collection;
+import java.util.List;
 import java.util.Objects;
 
 @Entity
@@ -28,6 +29,8 @@ public class UserAccount implements UserDetails {
     private String avatar;
     @Enumerated(EnumType.STRING)
     private AccountType accountType;
+    @OneToMany(mappedBy = "userAccount", fetch = FetchType.EAGER)
+    private List<Purchase> purchased;
 
     public UserAccount() {
     }

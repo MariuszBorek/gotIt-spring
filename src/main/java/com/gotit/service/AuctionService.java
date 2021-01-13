@@ -8,10 +8,7 @@ import com.gotit.entity.CategoryRepository;
 import org.springframework.stereotype.Service;
 
 import java.time.LocalDate;
-import java.util.ArrayList;
-import java.util.Comparator;
-import java.util.List;
-import java.util.Optional;
+import java.util.*;
 import java.util.stream.Collectors;
 
 @Service
@@ -24,7 +21,6 @@ public class AuctionService {
         this.auctionRepository = auctionRepository;
         this.categoryRepository = categoryRepository;
     }
-
 
 
     public List<AuctionDTO> findFiveLastAddedAuctions() {
@@ -64,7 +60,8 @@ public class AuctionService {
                 .setLocalization(auction.getLocalization())
                 .setDateOfIssue(auction.getDateOfIssue())
                 .setEndDate(auction.getEndDate())
-                .setNumberOfVisits(auction.getNumberOfVisits());
+                .setNumberOfVisits(auction.getNumberOfVisits())
+                .build();
     }
 
     private List<AuctionDTO> convertAuctionListToAuctionDTOList(List<Auction> auctions) {
@@ -84,5 +81,12 @@ public class AuctionService {
     public List<AuctionDTO> findCategoryProducts(String categoryName) {
         Category foundCategory = categoryRepository.findByName(categoryName).orElseThrow();
         return convertAuctionListToAuctionDTOList(auctionRepository.findAllByCategory(foundCategory).orElseThrow());
+    }
+
+    public List<AuctionDTO> findAuctionsByPhrase(String phrase) {
+        return convertAuctionListToAuctionDTOList(auctionRepository.findAll().stream()
+                .filter(e -> e.getTitle().toLowerCase().matches(".*" + phrase.toLowerCase() + ".*"))
+                .collect(Collectors.toList())
+        );
     }
 }

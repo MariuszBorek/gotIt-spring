@@ -12,12 +12,14 @@ public class InitService {
     private final AddressRepository addressRepository;
     private final CategoryRepository categoryRepository;
     private final AuctionRepository auctionRepository;
+    private final PurchaseRepository purchaseRepository;
 
-    public InitService(UserRepository userRepository, AddressRepository addressRepository, CategoryRepository categoryRepository, AuctionRepository auctionRepository) {
+    public InitService(UserRepository userRepository, AddressRepository addressRepository, CategoryRepository categoryRepository, AuctionRepository auctionRepository, PurchaseRepository purchaseRepository) {
         this.userRepository = userRepository;
         this.addressRepository = addressRepository;
         this.categoryRepository = categoryRepository;
         this.auctionRepository = auctionRepository;
+        this.purchaseRepository = purchaseRepository;
         init();
     }
 
@@ -25,6 +27,7 @@ public class InitService {
         createSampleUsers();
         createCategories();
         createAuctions();
+        createSamplePurchases();
 
 
 
@@ -136,6 +139,26 @@ public class InitService {
                 "photo",
                 AccountType.STANDARD);
         userRepository.save(userAccount);
+    }
+
+    private void createSamplePurchases() {
+        UserAccount userAccount = userRepository.findById(2L).orElseThrow();
+
+        Auction auction = new Auction("Apple iPhone XS - 64GB - Gold (T-Mobile) A1920 (CDMA + GSM)", "Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s", "photo", categoryRepository.findByName("Electronics").orElseThrow(), "99.99", "3000", true, "Kraków", LocalDate.now().minusDays(2), LocalDate.now(), 23);
+        auctionRepository.save(auction);
+        Purchase purchase = new Purchase(auction, userAccount, auction.getBuyNowPrice());
+        purchaseRepository.save(purchase);
+
+        auction = new Auction("Reebok ZigWild Trail 6 Men's Shoes", "Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s", "photo", categoryRepository.findByName("Fashion").orElseThrow(), "350.99", "15", true, "Kraków", LocalDate.now().minusDays(2), LocalDate.now(), 23);
+        auctionRepository.save(auction);
+        purchase = new Purchase(auction, userAccount, auction.getBuyNowPrice());
+        purchaseRepository.save(purchase);
+
+        auction = new Auction("Microsuede 7ft Foam Giant Bean Bag Memory", "Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s", "photo", categoryRepository.findByName("Home and Garden").orElseThrow(), "99.99", "15", true, "Kraków", LocalDate.now().minusDays(2), LocalDate.now(), 23);
+        auctionRepository.save(auction);
+        purchase = new Purchase(auction, userAccount, auction.getBuyNowPrice());
+        purchaseRepository.save(purchase);
+
     }
 
 }

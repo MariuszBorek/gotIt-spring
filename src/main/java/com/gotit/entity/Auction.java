@@ -25,6 +25,8 @@ public class Auction {
     private LocalDate dateOfIssue;
     private LocalDate endDate;
     private int numberOfVisits;
+    @OneToOne(mappedBy = "auction")
+    private Purchase purchase;
 
     public Auction() {
     }
