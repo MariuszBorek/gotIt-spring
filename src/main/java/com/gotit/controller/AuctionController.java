@@ -1,7 +1,9 @@
 package com.gotit.controller;
 
 import com.gotit.dto.AuctionDTO;
+import com.gotit.dto.MessageDTO;
 import com.gotit.service.AuctionService;
+import org.aspectj.bridge.Message;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
@@ -15,6 +17,12 @@ public class AuctionController {
 
     public AuctionController(AuctionService auctionService) {
         this.auctionService = auctionService;
+    }
+
+    @GetMapping(path = "/buyNow/{id}/{email}", produces = "application/json")
+    public AuctionDTO buyProduct(@PathVariable("id") final Long id,
+                                 @PathVariable("email") final String email) {
+        return auctionService.buyProductById(id, email);
     }
 
     @GetMapping(path = "/phrase/{phrase}", produces = "application/json")

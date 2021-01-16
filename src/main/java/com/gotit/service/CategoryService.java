@@ -1,6 +1,7 @@
 package com.gotit.service;
 
 import com.gotit.dto.CategoryDTO;
+import com.gotit.entity.Auction;
 import com.gotit.entity.Category;
 import com.gotit.entity.CategoryRepository;
 import org.springframework.stereotype.Service;
@@ -33,6 +34,8 @@ public class CategoryService {
                 new CategoryDTO("Estate", "houses and property", "avatar"),
                 new CategoryDTO("Company and Services", "cleaning, manufacturing and office equipment", "avatar"));
     }
+
+
 
 }
 

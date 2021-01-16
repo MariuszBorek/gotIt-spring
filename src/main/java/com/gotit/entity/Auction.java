@@ -27,11 +27,12 @@ public class Auction {
     private int numberOfVisits;
     @OneToOne(mappedBy = "auction")
     private Purchase purchase;
+    private boolean isFinished;
 
     public Auction() {
     }
 
-    public Auction(String title, String description, String photo, Category category, String minPrice, String buyNowPrice, boolean promotedAuction, String localization, LocalDate dateOfIssue, LocalDate endDate, int numberOfVisits) {
+    public Auction(String title, String description, String photo, Category category, String minPrice, String buyNowPrice, boolean promotedAuction, String localization, LocalDate dateOfIssue, LocalDate endDate, int numberOfVisits, boolean isFinished) {
         this.title = title;
         this.description = description;
         this.photo = photo;
@@ -43,6 +44,7 @@ public class Auction {
         this.dateOfIssue = dateOfIssue;
         this.endDate = endDate;
         this.numberOfVisits = numberOfVisits;
+        this.isFinished = isFinished;
     }
 
     public Long getId() {
@@ -141,6 +143,14 @@ public class Auction {
         this.numberOfVisits = numberOfVisits;
     }
 
+    public boolean isFinished() {
+        return isFinished;
+    }
+
+    public void setFinished(boolean finished) {
+        isFinished = finished;
+    }
+
     @Override
     public boolean equals(Object o) {
         if (this == o) return true;
@@ -156,11 +166,12 @@ public class Auction {
                 Objects.equals(buyNowPrice, auction.buyNowPrice) &&
                 Objects.equals(localization, auction.localization) &&
                 Objects.equals(dateOfIssue, auction.dateOfIssue) &&
-                Objects.equals(endDate, auction.endDate);
+                Objects.equals(endDate, auction.endDate) &&
+                Objects.equals(purchase, auction.purchase);
     }
 
     @Override
     public int hashCode() {
-        return Objects.hash(id, title, description, photo, minPrice, buyNowPrice, promotedAuction, localization, dateOfIssue, endDate, numberOfVisits);
+        return Objects.hash(id, title, description, photo, minPrice, buyNowPrice, promotedAuction, localization, dateOfIssue, endDate, numberOfVisits, purchase);
     }
 }

@@ -18,6 +18,10 @@ public class PurchaseService {
         this.userRepository = userRepository;
     }
 
+    public Purchase addPurchase(Purchase purchase) {
+        return purchaseRepository.save(purchase);
+    }
+
     public List<Purchase> getAllPurchasesOfUser(String userEmail) {
         UserAccount userAccount = userRepository.findByEmail(userEmail).orElseThrow();
         return purchaseRepository.findAllByUserAccount(userAccount).orElseThrow();

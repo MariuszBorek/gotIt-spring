@@ -17,11 +17,12 @@ public class AuctionDTO {
     private LocalDate dateOfIssue;
     private LocalDate endDate;
     private int numberOfVisits;
+    private boolean finished;
 
     public AuctionDTO() {
     }
 
-    public AuctionDTO(String title, Long id, String description, String photo, String category, String minPrice, String buyNowPrice, boolean promotedAuction, String localization, LocalDate dateOfIssue, LocalDate endDate, int numberOfVisits) {
+    public AuctionDTO(String title, Long id, String description, String photo, String category, String minPrice, String buyNowPrice, boolean promotedAuction, String localization, LocalDate dateOfIssue, LocalDate endDate, int numberOfVisits, boolean finished) {
         this.id = id;
         this.title = title;
         this.description = description;
@@ -34,6 +35,7 @@ public class AuctionDTO {
         this.dateOfIssue = dateOfIssue;
         this.endDate = endDate;
         this.numberOfVisits = numberOfVisits;
+        this.finished = finished;
     }
 
     public Long getId() {
@@ -144,6 +146,15 @@ public class AuctionDTO {
         return this;
     }
 
+    public boolean isFinished() {
+        return finished;
+    }
+
+    public AuctionDTO setFinished(boolean finished) {
+        this.finished = finished;
+        return this;
+    }
+
     public AuctionDTO build() {
         AuctionDTO auctionDTO = new AuctionDTO();
         auctionDTO.id = id;
@@ -158,6 +169,7 @@ public class AuctionDTO {
         auctionDTO.dateOfIssue = dateOfIssue;
         auctionDTO.endDate = endDate;
         auctionDTO.numberOfVisits = numberOfVisits;
+        auctionDTO.finished = finished;
         return auctionDTO;
     }
 }

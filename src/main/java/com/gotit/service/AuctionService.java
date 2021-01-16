@@ -1,10 +1,7 @@
 package com.gotit.service;
 
 import com.gotit.dto.AuctionDTO;
-import com.gotit.entity.Auction;
-import com.gotit.entity.AuctionRepository;
-import com.gotit.entity.Category;
-import com.gotit.entity.CategoryRepository;
+import com.gotit.entity.*;
 import org.springframework.stereotype.Service;
 
 import java.time.LocalDate;
@@ -16,10 +13,14 @@ public class AuctionService {
 
     private final AuctionRepository auctionRepository;
     private final CategoryRepository categoryRepository;
+    private final PurchaseService purchaseService;
+    private final UserRepository userRepository;
 
-    public AuctionService(AuctionRepository auctionRepository, CategoryRepository categoryRepository) {
+    public AuctionService(AuctionRepository auctionRepository, CategoryRepository categoryRepository, UserRepository userRepository, PurchaseService purchaseService) {
         this.auctionRepository = auctionRepository;
         this.categoryRepository = categoryRepository;
+        this.userRepository = userRepository;
+        this.purchaseService = purchaseService;
     }
 
 
@@ -61,6 +62,7 @@ public class AuctionService {
                 .setDateOfIssue(auction.getDateOfIssue())
                 .setEndDate(auction.getEndDate())
                 .setNumberOfVisits(auction.getNumberOfVisits())
+                .setFinished(auction.isFinished())
                 .build();
     }
 
@@ -80,7 +82,7 @@ public class AuctionService {
 
     public List<AuctionDTO> findCategoryProducts(String categoryName) {
         Category foundCategory = categoryRepository.findByName(categoryName).orElseThrow();
-        return convertAuctionListToAuctionDTOList(auctionRepository.findAllByCategory(foundCategory).orElseThrow());
+        return convertAuctionListToAuctionDTOList(auctionRepository.findAllByCategory(foundCategory).orElseThrow().stream().filter(e -> !e.isFinished()).collect(Collectors.toList()));
     }
 
     public List<AuctionDTO> findAuctionsByPhrase(String phrase) {
@@ -89,4 +91,18 @@ public class AuctionService {
                 .collect(Collectors.toList())
         );
     }
+
+    public AuctionDTO buyProductById(Long auctionId, String userEmail) {
+        Auction auction = auctionRepository.findById(auctionId).orElseThrow();
+        if (auction.isFinished()) {
+            return null;
+        }
+        auction.setFinished(true);
+        auctionRepository.save(auction);
+        UserAccount userAccount = userRepository.findByEmail(userEmail).orElseThrow();
+        purchaseService.addPurchase(new Purchase(auction, userAccount, auction.getBuyNowPrice()));
+        return mapAuctionToAuctionDTO(auction);
+
+    }
+
 }
