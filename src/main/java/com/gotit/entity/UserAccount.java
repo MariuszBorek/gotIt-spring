@@ -31,11 +31,18 @@ public class UserAccount implements UserDetails {
     private AccountType accountType;
     @OneToMany(mappedBy = "userAccount", fetch = FetchType.EAGER)
     private List<Purchase> purchased;
+    @JsonIgnore
+    @ManyToMany
+    @JoinTable(
+            name = "watched_auctions",
+            joinColumns = @JoinColumn(name = "userAccount_id"),
+            inverseJoinColumns = @JoinColumn(name = "auction_id"))
+    List<Auction> watchedAuctions;
 
     public UserAccount() {
     }
 
-    public UserAccount(String email, String password, String name, String surname, Address address, LocalDate accountCreationDate, AccountStatus accountStatus, String avatar, AccountType accountType) {
+    public UserAccount(String email, String password, String name, String surname, Address address, LocalDate accountCreationDate, AccountStatus accountStatus, String avatar, AccountType accountType, List<Auction> watchedAuctions) {
         this.email = email;
         this.password = password;
         this.name = name;
@@ -45,6 +52,7 @@ public class UserAccount implements UserDetails {
         this.accountStatus = accountStatus;
         this.avatar = avatar;
         this.accountType = accountType;
+        this.watchedAuctions = watchedAuctions;
     }
 
     public Long getId() {
@@ -121,6 +129,22 @@ public class UserAccount implements UserDetails {
 
     public void setAccountType(AccountType accountType) {
         this.accountType = accountType;
+    }
+
+    public List<Auction> getWatchedAuctions() {
+        return watchedAuctions;
+    }
+
+    public void setWatchedAuctions(List<Auction> watchedAuctions) {
+        this.watchedAuctions = watchedAuctions;
+    }
+
+    public List<Purchase> getPurchased() {
+        return purchased;
+    }
+
+    public void setPurchased(List<Purchase> purchased) {
+        this.purchased = purchased;
     }
 
     @Override

@@ -4,6 +4,8 @@ import com.gotit.entity.*;
 import org.springframework.stereotype.Service;
 
 import java.time.LocalDate;
+import java.util.Collections;
+import java.util.List;
 
 @Service
 public class InitService {
@@ -28,11 +30,9 @@ public class InitService {
         createCategories();
         createAuctions();
         createSamplePurchases();
-
-
+        createSampleWatchedAuctions();
 
     }
-
 
     private void createAuctions() {
         Auction auction = null;
@@ -100,7 +100,6 @@ public class InitService {
 
     }
 
-
     private void createCategories() {
         Category category = new Category("Electronics", "computers, laptops and mobile phone", "avatar");
         categoryRepository.save(category);
@@ -141,7 +140,8 @@ public class InitService {
                 LocalDate.now(),
                 AccountStatus.ACTIVE,
                 "sampleavatar.jpg",
-                AccountType.STANDARD);
+                AccountType.STANDARD,
+                Collections.emptyList());
         userRepository.save(userAccount);
     }
 
@@ -163,6 +163,17 @@ public class InitService {
         purchase = new Purchase(auction, userAccount, auction.getBuyNowPrice());
         purchaseRepository.save(purchase);
 
+    }
+
+    private void createSampleWatchedAuctions() {
+        Auction auction1 = auctionRepository.findById(15L).orElseThrow();
+        Auction auction2 = auctionRepository.findById(94L).orElseThrow();
+        Auction auction3 = auctionRepository.findById(189L).orElseThrow();
+
+        UserAccount userAccount = userRepository.findById(2L).orElseThrow();
+        userAccount.setWatchedAuctions(List.of(auction1, auction2, auction3));
+
+        userRepository.save(userAccount);
     }
 
 }

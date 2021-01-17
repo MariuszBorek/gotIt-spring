@@ -4,6 +4,7 @@ import com.fasterxml.jackson.annotation.JsonIgnore;
 
 import javax.persistence.*;
 import java.time.LocalDate;
+import java.util.List;
 import java.util.Objects;
 
 @Entity
@@ -28,6 +29,8 @@ public class Auction {
     @OneToOne(mappedBy = "auction")
     private Purchase purchase;
     private boolean isFinished;
+    @ManyToMany(mappedBy = "watchedAuctions")
+    List<UserAccount> users;
 
     public Auction() {
     }
@@ -158,20 +161,21 @@ public class Auction {
         Auction auction = (Auction) o;
         return promotedAuction == auction.promotedAuction &&
                 numberOfVisits == auction.numberOfVisits &&
+                isFinished == auction.isFinished &&
                 Objects.equals(id, auction.id) &&
                 Objects.equals(title, auction.title) &&
                 Objects.equals(description, auction.description) &&
                 Objects.equals(photo, auction.photo) &&
+                Objects.equals(category, auction.category) &&
                 Objects.equals(minPrice, auction.minPrice) &&
                 Objects.equals(buyNowPrice, auction.buyNowPrice) &&
                 Objects.equals(localization, auction.localization) &&
                 Objects.equals(dateOfIssue, auction.dateOfIssue) &&
-                Objects.equals(endDate, auction.endDate) &&
-                Objects.equals(purchase, auction.purchase);
+                Objects.equals(endDate, auction.endDate);
     }
 
     @Override
     public int hashCode() {
-        return Objects.hash(id, title, description, photo, minPrice, buyNowPrice, promotedAuction, localization, dateOfIssue, endDate, numberOfVisits, purchase);
+        return Objects.hash(id, title, description, photo, category, minPrice, buyNowPrice, promotedAuction, localization, dateOfIssue, endDate, numberOfVisits, isFinished);
     }
 }

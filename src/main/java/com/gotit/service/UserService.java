@@ -1,5 +1,6 @@
 package com.gotit.service;
 
+import com.gotit.dto.AuctionDTO;
 import com.gotit.dto.UserDTO;
 import com.gotit.entity.*;
 import org.springframework.security.core.userdetails.UserDetails;
@@ -9,16 +10,20 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import java.time.LocalDate;
+import java.util.Collections;
+import java.util.List;
 
 @Service("userService")
 public class UserService implements UserDetailsService {
 
     private final UserRepository userRepository;
     private final AddressRepository addressRepository;
+    private final AuctionService auctionService;
 
-    public UserService(UserRepository userRepository, AddressRepository addressRepository) {
+    public UserService(UserRepository userRepository, AddressRepository addressRepository, AuctionService auctionService) {
         this.userRepository = userRepository;
         this.addressRepository = addressRepository;
+        this.auctionService = auctionService;
     }
 
     @Override
@@ -42,8 +47,14 @@ public class UserService implements UserDetailsService {
                 LocalDate.now(),
                 AccountStatus.ACTIVE,
                 "photo",
-                AccountType.STANDARD);
+                AccountType.STANDARD,
+                Collections.emptyList());
         userRepository.save(userAccount);
+    }
+
+    public List<AuctionDTO> findWatchedAuctions(String email) {
+        UserAccount userAccount = userRepository.findByEmail(email).orElseThrow();
+        return auctionService.convertAuctionListToAuctionDTOList(userAccount.getWatchedAuctions());
     }
 
 
@@ -63,5 +74,23 @@ public class UserService implements UserDetailsService {
                 userAccount.getAddress().getProvince(),
                 userAccount.getAddress().getCity(),
                 userAccount.getAvatar());
+    }
+
+    public void updateUserData(UserDTO userDTO, String userEmail) {
+        UserAccount userAccount = userRepository.findByEmail(userEmail).orElseThrow();
+        Address address = addressRepository.findById(userAccount.getAddress().getId()).orElseThrow();
+
+        address.setStreet(userDTO.getStreet());
+        address.setHouseNumber(userDTO.getHouseNumber());
+        address.setPostcode(userDTO.getPostcode());
+        address.setProvince(userDTO.getProvince());
+        address.setCity(userDTO.getCity());
+        addressRepository.save(address);
+
+
+        userAccount.setName(userDTO.getName());
+        userAccount.setSurname(userDTO.getSurname());
+        userRepository.save(userAccount);
+
     }
 }

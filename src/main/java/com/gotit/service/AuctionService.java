@@ -49,7 +49,7 @@ public class AuctionService {
         return convertAuctionListToAuctionDTOList(auctions);
     }
 
-    private AuctionDTO mapAuctionToAuctionDTO(Auction auction) {
+    public AuctionDTO mapAuctionToAuctionDTO(Auction auction) {
         return new AuctionDTO().setId(auction.getId())
                 .setTitle(auction.getTitle())
                 .setDescription(auction.getDescription())
@@ -66,7 +66,7 @@ public class AuctionService {
                 .build();
     }
 
-    private List<AuctionDTO> convertAuctionListToAuctionDTOList(List<Auction> auctions) {
+    public List<AuctionDTO> convertAuctionListToAuctionDTOList(List<Auction> auctions) {
         List<AuctionDTO> auctionsDTO = new ArrayList<>();
         for (Auction auction : auctions) {
             auctionsDTO.add(mapAuctionToAuctionDTO(auction)
@@ -98,6 +98,7 @@ public class AuctionService {
             return null;
         }
         auction.setFinished(true);
+        auction.setEndDate(LocalDate.now());
         auctionRepository.save(auction);
         UserAccount userAccount = userRepository.findByEmail(userEmail).orElseThrow();
         purchaseService.addPurchase(new Purchase(auction, userAccount, auction.getBuyNowPrice()));
@@ -105,4 +106,10 @@ public class AuctionService {
 
     }
 
+    public void addToWatchedProducts(Long auctionId, String userEmail) {
+        Auction auction = auctionRepository.findById(auctionId).orElseThrow();
+        UserAccount userAccount = userRepository.findByEmail(userEmail).orElseThrow();
+        userAccount.getWatchedAuctions().add(auction);
+        userRepository.save(userAccount);
+    }
 }
