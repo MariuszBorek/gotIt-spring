@@ -38,10 +38,21 @@ public class FileController {
         this.fileService = fileService;
     }
 
-    @PostMapping("/upload")
+    @PostMapping("/upload-photo")
     public void uploadImage(@RequestParam("imageFile") MultipartFile imageFile) throws IOException {
         try {
             fileService.saveImage(imageFile);
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+    }
+
+
+    @PostMapping("/upload-avatar/{email}")
+    public void uploadAvatar(@RequestParam("imageFile") MultipartFile imageFile,
+                             @PathVariable("email") String email) throws IOException {
+        try {
+            fileService.saveAvatar(imageFile, email);
         } catch (Exception e) {
             e.printStackTrace();
         }
