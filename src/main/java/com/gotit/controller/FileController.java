@@ -49,7 +49,7 @@ public class FileController {
 
     @GetMapping(path = { "/get/{imageName}" })
     public ImageModel getImage(@PathVariable("imageName") String imageName) throws IOException {
-        Path path = Paths.get("src/main/resources/static/photos/" + imageName);
+        Path path = Paths.get("/Users/MariuszBorek/Documents/repository/gotit-frontend/src/assets/images/photos/" + imageName);
         return new ImageModel(imageName, "jpeg", Files.readAllBytes(path));
     }
 
