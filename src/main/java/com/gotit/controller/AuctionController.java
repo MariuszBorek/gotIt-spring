@@ -19,6 +19,11 @@ public class AuctionController {
         this.auctionService = auctionService;
     }
 
+    @GetMapping(path = "/random-premium-auction", produces = "application/json")
+    public AuctionDTO getRandomPremiumAuction() {
+        return auctionService.findRandomPremiumAuction();
+    }
+
     @GetMapping(path = "/add-to-watched-auction/{id}/{email}", produces = "application/json")
     public void addToWatchedProducts(@PathVariable("id") final Long id,
                                      @PathVariable("email") final String email) {

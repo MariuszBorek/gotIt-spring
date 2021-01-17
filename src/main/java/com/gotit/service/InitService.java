@@ -41,7 +41,7 @@ public class InitService {
             auctionRepository.save(auction);
         }
         for (int i = 0; i < 15; i++) {
-            auction = new Auction("Apple iPhone 11 - 120GB - Black Like New!!! premium" + i, "Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s", "placeholderproduct.jpg", categoryRepository.findByName("Electronics").orElseThrow(), "956.99", "15" + i, true, "Kraków", LocalDate.now().minusDays(2).plusDays(i), LocalDate.now().plusDays(i), 23 + i, false);
+            auction = new Auction("Apple iPhone 11 - 120GB - Black Like New!!! premium" + i, "Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s", "iphone2.jpg", categoryRepository.findByName("Electronics").orElseThrow(), "956.99", "15" + i, true, "Kraków", LocalDate.now().minusDays(2).plusDays(i), LocalDate.now().plusDays(i), 23 + i, false);
             auctionRepository.save(auction);
         }
         for (int i = 0; i < 20; i++) {
@@ -49,11 +49,11 @@ public class InitService {
             auctionRepository.save(auction);
         }
         for (int i = 0; i < 30; i++) {
-            auction = new Auction("Microsuede 7ft Foam Giant Bean Bag Memory " + i, "Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s", "placeholderproduct.jpg", categoryRepository.findByName("Home and Garden").orElseThrow(), "99.99", "15" + i, false, "Kraków", LocalDate.now().minusDays(2).plusDays(i), LocalDate.now().plusDays(i), 23 + i, false);
+            auction = new Auction("Microsuede 7ft Foam Giant Bean Bag Memory " + i, "Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s", "beanbag.jpg", categoryRepository.findByName("Home and Garden").orElseThrow(), "99.99", "15" + i, false, "Kraków", LocalDate.now().minusDays(2).plusDays(i), LocalDate.now().plusDays(i), 23 + i, false);
             auctionRepository.save(auction);
         }
         for (int i = 0; i < 30; i++) {
-            auction = new Auction("Microsuede 7ft Foam Giant Bean Bag Memory - premium " + i, "Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s", "placeholderproduct.jpg", categoryRepository.findByName("Home and Garden").orElseThrow(), "67.99", "15" + i, true, "Kraków", LocalDate.now().minusDays(2).plusDays(i), LocalDate.now().plusDays(i), 23 + i, false);
+            auction = new Auction("Microsuede 7ft Foam Giant Bean Bag Memory - premium " + i, "Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s", "beanbag.jpg", categoryRepository.findByName("Home and Garden").orElseThrow(), "67.99", "15" + i, true, "Kraków", LocalDate.now().minusDays(2).plusDays(i), LocalDate.now().plusDays(i), 23 + i, false);
             auctionRepository.save(auction);
         }
         for (int i = 0; i < 25; i++) {
@@ -65,7 +65,7 @@ public class InitService {
             auctionRepository.save(auction);
         }
         for (int i = 0; i < 25; i++) {
-            auction = new Auction("Prismacolor PC1150 Premier Colored Pencils - Set of 150 " + i, "Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s", "placeholderproduct.jpg", categoryRepository.findByName("Culture and Entertainment").orElseThrow(), "99.99", "15" + i, false, "Kraków", LocalDate.now().plusDays(i), LocalDate.now().minusDays(2).plusDays(i), 23 + i, false);
+            auction = new Auction("Prismacolor PC1150 Premier Colored Pencils - Set of 150 " + i, "Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s", "pencils.jpg", categoryRepository.findByName("Culture and Entertainment").orElseThrow(), "99.99", "15" + i, false, "Kraków", LocalDate.now().plusDays(i), LocalDate.now().minusDays(2).plusDays(i), 23 + i, false);
             auctionRepository.save(auction);
         }
         for (int i = 0; i < 25; i++) {
@@ -77,7 +77,7 @@ public class InitService {
             auctionRepository.save(auction);
         }
         for (int i = 0; i < 15; i++) {
-            auction = new Auction("Motor yamaha - new!!!" + i, "Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s", "placeholderproduct.jpg", categoryRepository.findByName("Motors").orElseThrow(), "99.99", "15" + i, false, "Kraków", LocalDate.now().plusDays(i), LocalDate.now().minusDays(2).plusDays(i), 23 + i, false);
+            auction = new Auction("Motor yamaha - new!!!" + i, "Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s", "yamaha.jpg", categoryRepository.findByName("Motors").orElseThrow(), "99.99", "15" + i, false, "Kraków", LocalDate.now().plusDays(i), LocalDate.now().minusDays(2).plusDays(i), 23 + i, false);
             auctionRepository.save(auction);
         }
         for (int i = 0; i < 15; i++) {

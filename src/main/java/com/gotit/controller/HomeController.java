@@ -33,6 +33,12 @@ public class HomeController {
         return categoryService.convertCategoryEntityToCategoryDTO(categoryService.findAllCategories());
     }
 
+    @GetMapping(path = "/check-finished-auctions")
+    public boolean checkFinishedAuctions() {
+        auctionService.markFinishedAuctions();
+        return true;
+    }
+
 
 
 

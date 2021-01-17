@@ -34,7 +34,7 @@ public class AuctionService {
 
     public List<AuctionDTO> findFiveEndingAuctions() {
         List<Auction> auctions = auctionRepository.findAll().stream()
-                .sorted(Comparator.comparing(Auction::getEndDate))
+                .sorted(Comparator.comparing(auction -> auction.getEndDate().isAfter(LocalDate.now())))
                 .limit(5)
                 .collect(Collectors.toList());
         return convertAuctionListToAuctionDTOList(auctions);
@@ -112,4 +112,24 @@ public class AuctionService {
         userAccount.getWatchedAuctions().add(auction);
         userRepository.save(userAccount);
     }
+
+    public AuctionDTO findRandomPremiumAuction() {
+        return mapAuctionToAuctionDTO(auctionRepository.findAll().stream()
+                .filter(Auction::getPromotedAuction)
+                .findAny()
+                .orElseThrow());
+    }
+
+    public void markFinishedAuctions() {
+        List<Auction> auctions = auctionRepository.findAll().stream()
+                .sorted(Comparator.comparing(Auction::getEndDate).reversed())
+                .filter((e) -> e.getEndDate().isBefore(LocalDate.now()))
+                .collect(Collectors.toList());
+        for (Auction auction : auctions) {
+            auction.setFinished(true);
+            auctionRepository.save(auction);
+        }
+    }
+
+
 }
