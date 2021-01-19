@@ -114,10 +114,11 @@ public class AuctionService {
     }
 
     public AuctionDTO findRandomPremiumAuction() {
-        return mapAuctionToAuctionDTO(auctionRepository.findAll().stream()
+        List<Auction> collect = auctionRepository.findAll().stream()
                 .filter(Auction::getPromotedAuction)
-                .findAny()
-                .orElseThrow());
+                .collect(Collectors.toList());
+        Random random = new Random();
+        return mapAuctionToAuctionDTO(collect.get(random.nextInt(collect.size())));
     }
 
     public void markFinishedAuctions() {

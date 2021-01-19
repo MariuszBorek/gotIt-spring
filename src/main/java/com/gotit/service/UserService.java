@@ -3,6 +3,8 @@ package com.gotit.service;
 import com.gotit.dto.AuctionDTO;
 import com.gotit.dto.UserDTO;
 import com.gotit.entity.*;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
@@ -12,6 +14,7 @@ import org.springframework.transaction.annotation.Transactional;
 import java.time.LocalDate;
 import java.util.Collections;
 import java.util.List;
+import java.util.NoSuchElementException;
 
 @Service("userService")
 public class UserService implements UserDetailsService {
@@ -19,6 +22,7 @@ public class UserService implements UserDetailsService {
     private final UserRepository userRepository;
     private final AddressRepository addressRepository;
     private final AuctionService auctionService;
+    private final Logger logger = LoggerFactory.getLogger(UserService.class);
 
     public UserService(UserRepository userRepository, AddressRepository addressRepository, AuctionService auctionService) {
         this.userRepository = userRepository;
@@ -53,8 +57,13 @@ public class UserService implements UserDetailsService {
     }
 
     public List<AuctionDTO> findWatchedAuctions(String email) {
-        UserAccount userAccount = userRepository.findByEmail(email).orElseThrow();
-        return auctionService.convertAuctionListToAuctionDTOList(userAccount.getWatchedAuctions());
+        try {
+            UserAccount userAccount = userRepository.findByEmail(email).orElseThrow();
+            return auctionService.convertAuctionListToAuctionDTOList(userAccount.getWatchedAuctions());
+        } catch (NoSuchElementException e) {
+            logger.info("user do not load yet");
+            return null;
+        }
     }
 
 
