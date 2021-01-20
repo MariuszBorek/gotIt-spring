@@ -38,6 +38,8 @@ public class UserAccount implements UserDetails {
             joinColumns = @JoinColumn(name = "userAccount_id"),
             inverseJoinColumns = @JoinColumn(name = "auction_id"))
     List<Auction> watchedAuctions;
+    @OneToMany(mappedBy = "auctionOwner", fetch = FetchType.EAGER)
+    private List<Auction> listedAuctions;
 
     public UserAccount() {
     }

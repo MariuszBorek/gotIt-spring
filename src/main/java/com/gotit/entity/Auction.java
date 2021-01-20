@@ -31,11 +31,14 @@ public class Auction {
     private boolean isFinished;
     @ManyToMany(mappedBy = "watchedAuctions")
     List<UserAccount> users;
+    @JsonIgnore
+    @ManyToOne(fetch = FetchType.EAGER)
+    UserAccount auctionOwner;
 
     public Auction() {
     }
 
-    public Auction(String title, String description, String photo, Category category, String minPrice, String buyNowPrice, boolean promotedAuction, String localization, LocalDate dateOfIssue, LocalDate endDate, int numberOfVisits, boolean isFinished) {
+    public Auction(String title, String description, String photo, Category category, String minPrice, String buyNowPrice, boolean promotedAuction, String localization, LocalDate dateOfIssue, LocalDate endDate, int numberOfVisits, boolean isFinished, UserAccount auctionOwner) {
         this.title = title;
         this.description = description;
         this.photo = photo;
@@ -48,6 +51,7 @@ public class Auction {
         this.endDate = endDate;
         this.numberOfVisits = numberOfVisits;
         this.isFinished = isFinished;
+        this.auctionOwner = auctionOwner;
     }
 
     public Long getId() {
@@ -154,6 +158,14 @@ public class Auction {
         isFinished = finished;
     }
 
+    public UserAccount getAuctionOwner() {
+        return auctionOwner;
+    }
+
+    public void setAuctionOwner(UserAccount auctionOwner) {
+        this.auctionOwner = auctionOwner;
+    }
+
     @Override
     public boolean equals(Object o) {
         if (this == o) return true;
@@ -171,11 +183,12 @@ public class Auction {
                 Objects.equals(buyNowPrice, auction.buyNowPrice) &&
                 Objects.equals(localization, auction.localization) &&
                 Objects.equals(dateOfIssue, auction.dateOfIssue) &&
-                Objects.equals(endDate, auction.endDate);
+                Objects.equals(endDate, auction.endDate) &&
+                Objects.equals(auctionOwner, auction.auctionOwner);
     }
 
     @Override
     public int hashCode() {
-        return Objects.hash(id, title, description, photo, category, minPrice, buyNowPrice, promotedAuction, localization, dateOfIssue, endDate, numberOfVisits, isFinished);
+        return Objects.hash(id, title, description, photo, category, minPrice, buyNowPrice, promotedAuction, localization, dateOfIssue, endDate, numberOfVisits, isFinished, auctionOwner);
     }
 }

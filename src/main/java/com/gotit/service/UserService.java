@@ -10,6 +10,7 @@ import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
+import org.springframework.web.multipart.MultipartFile;
 
 import java.time.LocalDate;
 import java.util.Collections;
@@ -22,17 +23,19 @@ public class UserService implements UserDetailsService {
     private final UserRepository userRepository;
     private final AddressRepository addressRepository;
     private final AuctionService auctionService;
+    private final FileService fileService;
     private final Logger logger = LoggerFactory.getLogger(UserService.class);
 
-    public UserService(UserRepository userRepository, AddressRepository addressRepository, AuctionService auctionService) {
+    public UserService(UserRepository userRepository, AddressRepository addressRepository, AuctionService auctionService, FileService fileService) {
         this.userRepository = userRepository;
         this.addressRepository = addressRepository;
         this.auctionService = auctionService;
+        this.fileService = fileService;
     }
 
     @Override
     public UserDetails loadUserByUsername(String s) throws UsernameNotFoundException {
-        return userRepository.findByEmail(s).orElseThrow(()->new UsernameNotFoundException("Username: " + s + " not found."));
+        return userRepository.findByEmail(s).orElseThrow(() -> new UsernameNotFoundException("Username: " + s + " not found."));
     }
 
     @Transactional
@@ -67,7 +70,6 @@ public class UserService implements UserDetailsService {
     }
 
 
-
     public UserAccount getUser(String email) {
         return userRepository.findByEmail(email).orElseThrow();
     }
@@ -100,6 +102,19 @@ public class UserService implements UserDetailsService {
         userAccount.setName(userDTO.getName());
         userAccount.setSurname(userDTO.getSurname());
         userRepository.save(userAccount);
+
+    }
+
+    public void createUserAuction(MultipartFile imageFile, String category, String title, String description, String minPrice, String buyNowPrice, boolean promotedAuction, String endDate, String email) {
+        String photoName = null;
+        try {
+            photoName = fileService.saveImage(imageFile);
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+
+        UserAccount userAccount = userRepository.findByEmail(email).orElseThrow();
+        auctionService.createAuction(photoName, category, title, description, minPrice, buyNowPrice, promotedAuction, endDate, userAccount);
 
     }
 }

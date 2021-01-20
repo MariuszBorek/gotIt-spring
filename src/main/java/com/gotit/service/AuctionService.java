@@ -63,6 +63,7 @@ public class AuctionService {
                 .setEndDate(auction.getEndDate())
                 .setNumberOfVisits(auction.getNumberOfVisits())
                 .setFinished(auction.isFinished())
+                .setOwner(auction.getAuctionOwner().getEmail())
                 .build();
     }
 
@@ -82,7 +83,9 @@ public class AuctionService {
 
     public List<AuctionDTO> findCategoryProducts(String categoryName) {
         Category foundCategory = categoryRepository.findByName(categoryName).orElseThrow();
-        return convertAuctionListToAuctionDTOList(auctionRepository.findAllByCategory(foundCategory).orElseThrow().stream().filter(e -> !e.isFinished()).collect(Collectors.toList()));
+        return convertAuctionListToAuctionDTOList(auctionRepository.findAllByCategory(foundCategory).orElseThrow().stream()
+                .filter(e -> !e.isFinished())
+                .collect(Collectors.toList()));
     }
 
     public List<AuctionDTO> findAuctionsByPhrase(String phrase) {
@@ -133,4 +136,15 @@ public class AuctionService {
     }
 
 
+    public void createAuction(String photoName, String category, String title, String description, String minPrice,
+                              String buyNowPrice, boolean promotedAuction, String endDate, UserAccount auctionOwner) {
+        Category foundCategory = categoryRepository.findAll().stream()
+                .filter(e -> e.getName().equals(category))
+                .findFirst().orElseThrow();
+
+        Auction auction = new Auction(title, description, photoName, foundCategory, minPrice, buyNowPrice,
+                promotedAuction, auctionOwner.getAddress().getCity(), LocalDate.now(),
+                LocalDate.now().plusDays(Long.parseLong(endDate)), 0, false, auctionOwner);
+        auctionRepository.save(auction);
+    }
 }

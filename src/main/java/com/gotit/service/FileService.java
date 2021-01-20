@@ -9,6 +9,7 @@ import org.springframework.web.multipart.MultipartFile;
 import java.nio.file.Files;
 import java.nio.file.Path;
 import java.nio.file.Paths;
+import java.util.UUID;
 
 @Service
 public class FileService {
@@ -24,11 +25,14 @@ public class FileService {
         this.userRepository = userRepository;
     }
 
-    public void saveImage(MultipartFile imageFile) throws Exception {
+    public String saveImage(MultipartFile imageFile) throws Exception {
+        UUID uuid = UUID.randomUUID();
+        String photoName = uuid + "_" + imageFile.getOriginalFilename();
         byte[] bytes = imageFile.getBytes();
-        Path path = Paths.get(folderWithPhotos + imageFile.getOriginalFilename());
+        Path path = Paths.get(folderWithPhotos + photoName);
         Files.write(path, bytes);
 
+        return photoName;
     }
 
     public void saveAvatar(MultipartFile imageFile, String userEmail) throws Exception {

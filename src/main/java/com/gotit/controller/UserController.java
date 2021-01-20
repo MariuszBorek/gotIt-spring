@@ -3,9 +3,12 @@ package com.gotit.controller;
 import com.gotit.dto.AuctionDTO;
 import com.gotit.dto.UserDTO;
 import com.gotit.dto.MessageDTO;
+import com.gotit.service.FileService;
 import com.gotit.service.UserService;
 import org.springframework.web.bind.annotation.*;
+import org.springframework.web.multipart.MultipartFile;
 
+import java.io.IOException;
 import java.util.List;
 
 @CrossOrigin("*")
@@ -17,6 +20,19 @@ public class UserController {
 
     public UserController(UserService userService) {
         this.userService = userService;
+    }
+
+    @PostMapping("/set-up-auction/{email}")
+    public void createAuction(@RequestParam("imageFile") final MultipartFile imageFile,
+                              @RequestParam("category") final String category,
+                              @RequestParam("title") final String title,
+                              @RequestParam("description") final String description,
+                              @RequestParam("minPrice") final String minPrice,
+                              @RequestParam("buyNowPrice") final String buyNowPrice,
+                              @RequestParam("promotedAuction")final  boolean promotedAuction,
+                              @RequestParam("endDate") final String endDate,
+                              @PathVariable("email") final String email) throws IOException {
+        userService.createUserAuction(imageFile, category, title, description, minPrice, buyNowPrice, promotedAuction, endDate, email);
     }
 
     @PostMapping("/update-user-data/{email}")
