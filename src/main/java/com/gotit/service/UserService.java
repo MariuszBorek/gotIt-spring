@@ -16,6 +16,7 @@ import java.time.LocalDate;
 import java.util.Collections;
 import java.util.List;
 import java.util.NoSuchElementException;
+import java.util.stream.Collectors;
 
 @Service("userService")
 public class UserService implements UserDetailsService {
@@ -24,13 +25,15 @@ public class UserService implements UserDetailsService {
     private final AddressRepository addressRepository;
     private final AuctionService auctionService;
     private final FileService fileService;
+    private final AuctionRepository auctionRepository;
     private final Logger logger = LoggerFactory.getLogger(UserService.class);
 
-    public UserService(UserRepository userRepository, AddressRepository addressRepository, AuctionService auctionService, FileService fileService) {
+    public UserService(UserRepository userRepository, AddressRepository addressRepository, AuctionService auctionService, FileService fileService, AuctionRepository auctionRepository) {
         this.userRepository = userRepository;
         this.addressRepository = addressRepository;
         this.auctionService = auctionService;
         this.fileService = fileService;
+        this.auctionRepository = auctionRepository;
     }
 
     @Override
@@ -116,5 +119,12 @@ public class UserService implements UserDetailsService {
         UserAccount userAccount = userRepository.findByEmail(email).orElseThrow();
         auctionService.createAuction(photoName, category, title, description, minPrice, buyNowPrice, promotedAuction, endDate, userAccount);
 
+    }
+
+    public List<AuctionDTO> findUserPostedAuctions(String email) {
+        UserAccount userAccount = userRepository.findByEmail(email).orElseThrow();
+        return auctionService.convertAuctionListToAuctionDTOList(auctionRepository.findAll().stream()
+                .filter(e -> e.getAuctionOwner().equals(userAccount))
+                .collect(Collectors.toList()));
     }
 }

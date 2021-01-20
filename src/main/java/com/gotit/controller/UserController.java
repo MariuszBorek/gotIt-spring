@@ -35,6 +35,13 @@ public class UserController {
         userService.createUserAuction(imageFile, category, title, description, minPrice, buyNowPrice, promotedAuction, endDate, email);
     }
 
+
+    @GetMapping(path = "/posted-auctions/{email}", produces = "application/json")
+    public List<AuctionDTO> getUserPostedAuctions(@PathVariable("email") final String email) {
+        return userService.findUserPostedAuctions(email);
+    }
+
+
     @PostMapping("/update-user-data/{email}")
     public boolean updateUserData(@RequestBody UserDTO userDTO,
                                   @PathVariable("email") final String email) {

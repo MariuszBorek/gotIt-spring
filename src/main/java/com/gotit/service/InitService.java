@@ -31,6 +31,7 @@ public class InitService {
         createAuctions();
         createSamplePurchases();
         createSampleWatchedAuctions();
+        createUserPostedAuctions();
 
     }
 
@@ -151,7 +152,7 @@ public class InitService {
                 "Małopolska",
                 "Kraków");
         addressRepository.save(address);
-        userAccount = new UserAccount("sample@seller.com",
+        userAccount = new UserAccount("samplesecond@gmail.com",
                 "qwerty",
                 "Grzegorz",
                 "Malinowski",
@@ -195,6 +196,22 @@ public class InitService {
 
         userRepository.save(userAccount);
     }
+
+    private void createUserPostedAuctions() {
+        UserAccount seller = userRepository.findById(2L).orElseThrow();
+        UserAccount buyer = userRepository.findById(4L).orElseThrow();
+
+        Auction auction = new Auction("Beats headphones", "Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s", "beats.jpg", categoryRepository.findByName("Electronics").orElseThrow(), "999.99", "1200", true, "Kraków", LocalDate.now(), LocalDate.now().plusDays(4L), 23, false, seller);
+        auctionRepository.save(auction);
+
+        auction = new Auction("Reebok ZigWild Trail 6 Men's Shoes", "Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s", "shoes.jpg", categoryRepository.findByName("Fashion").orElseThrow(), "350.99", "15", false, "Kraków", LocalDate.now(), LocalDate.now().plusDays(6L), 23, false, seller);
+        auctionRepository.save(auction);
+
+        auction = new Auction("Microsuede 7ft Foam Giant Bean Bag Memory", "Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s", "placeholderproduct.jpg", categoryRepository.findByName("Home and Garden").orElseThrow(), "99.99", "15", false, "Kraków", LocalDate.now(), LocalDate.now().plusDays(1L), 23, false, seller);
+        auctionRepository.save(auction);
+
+    }
+
 
 }
 
