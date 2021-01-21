@@ -78,7 +78,9 @@ public class AuctionService {
 
 
     public AuctionDTO findAuction(String id) {
-        return mapAuctionToAuctionDTO(auctionRepository.findById(Long.parseLong(id)).orElseThrow());
+        Auction auction = auctionRepository.findById(Long.parseLong(id)).orElseThrow();
+        incrementVisits(auction);
+        return mapAuctionToAuctionDTO(auction);
     }
 
     public List<AuctionDTO> findCategoryProducts(String categoryName) {
@@ -145,6 +147,12 @@ public class AuctionService {
         Auction auction = new Auction(title, description, photoName, foundCategory, minPrice, buyNowPrice,
                 promotedAuction, auctionOwner.getAddress().getCity(), LocalDate.now(),
                 LocalDate.now().plusDays(Long.parseLong(endDate)), 0, false, auctionOwner);
+        auctionRepository.save(auction);
+    }
+
+    private void incrementVisits(Auction auction) {
+        int numberOfVisits = auction.getNumberOfVisits() + 1;
+        auction.setNumberOfVisits(numberOfVisits);
         auctionRepository.save(auction);
     }
 }
