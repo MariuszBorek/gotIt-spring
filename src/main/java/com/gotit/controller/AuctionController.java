@@ -19,6 +19,11 @@ public class AuctionController {
         this.auctionService = auctionService;
     }
 
+    @GetMapping(path = "/bidding/{email}", produces = "application/json")
+    public List<AuctionDTO> getAuctionsBid(@PathVariable("email") final String email) {
+        return auctionService.getUserAuctionsBid(email);
+    }
+
     @GetMapping(path = "/random-premium-auction", produces = "application/json")
     public AuctionDTO getRandomPremiumAuction() {
         return auctionService.findRandomPremiumAuction();
@@ -35,6 +40,16 @@ public class AuctionController {
                                  @PathVariable("email") final String email) {
         return auctionService.buyProductById(id, email);
     }
+
+    String str = "/${offeredPrice}/${auctionId}/${this.getUserEmail()}";
+
+    @GetMapping(path = "/make-offer/{offeredPrice}/{auctionId}/{email}", produces = "application/json")
+    public AuctionDTO makeAnOffer(@PathVariable("offeredPrice") final String offeredPrice,
+                                  @PathVariable("auctionId") final Long auctionId,
+                                  @PathVariable("email") final String email) {
+        return auctionService.addNewOffer(offeredPrice, auctionId, email);
+    }
+
 
     @GetMapping(path = "/phrase/{phrase}", produces = "application/json")
     public List<AuctionDTO> getAuctionsByPhrase(@PathVariable("phrase") final String phrase) {

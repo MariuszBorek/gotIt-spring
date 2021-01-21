@@ -40,6 +40,8 @@ public class UserAccount implements UserDetails {
     List<Auction> watchedAuctions;
     @OneToMany(mappedBy = "auctionOwner", fetch = FetchType.EAGER)
     private List<Auction> listedAuctions;
+    @OneToOne(mappedBy = "userAccount")
+    private Offer offers;
 
     public UserAccount() {
     }
@@ -149,6 +151,8 @@ public class UserAccount implements UserDetails {
         this.purchased = purchased;
     }
 
+
+
     @Override
     public boolean equals(Object o) {
         if (this == o) return true;
@@ -162,12 +166,14 @@ public class UserAccount implements UserDetails {
                 Objects.equals(address, that.address) &&
                 Objects.equals(accountCreationDate, that.accountCreationDate) &&
                 accountStatus == that.accountStatus &&
-                Objects.equals(avatar, that.avatar);
+                Objects.equals(avatar, that.avatar) &&
+                accountType == that.accountType &&
+                Objects.equals(watchedAuctions, that.watchedAuctions);
     }
 
     @Override
     public int hashCode() {
-        return Objects.hash(id, email, password, name, surname, address, accountCreationDate, accountStatus, avatar);
+        return Objects.hash(id, email, password, name, surname, address, accountCreationDate, accountStatus, avatar, accountType, watchedAuctions);
     }
 
     @Override

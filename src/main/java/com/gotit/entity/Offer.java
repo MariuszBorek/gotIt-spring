@@ -1,11 +1,23 @@
 package com.gotit.entity;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
+
+import javax.persistence.*;
+import java.util.List;
 import java.util.Objects;
 
+
+@Entity
 public class Offer {
 
+    @Id
+    @GeneratedValue
     private Long id;
+    @JsonIgnore
+    @ManyToOne(fetch = FetchType.EAGER)
     private Auction auction;
+    @JsonIgnore
+    @OneToOne
     private UserAccount userAccount;
     private double price;
 
@@ -13,9 +25,9 @@ public class Offer {
     }
 
     public Offer(Auction auction, UserAccount userAccount, double price) {
-        this.auction = auction;
         this.userAccount = userAccount;
         this.price = price;
+        this.auction = auction;
     }
 
     public Long getId() {

@@ -15,13 +15,15 @@ public class InitService {
     private final CategoryRepository categoryRepository;
     private final AuctionRepository auctionRepository;
     private final PurchaseRepository purchaseRepository;
+    private final OfferRepository offerRepository;
 
-    public InitService(UserRepository userRepository, AddressRepository addressRepository, CategoryRepository categoryRepository, AuctionRepository auctionRepository, PurchaseRepository purchaseRepository) {
+    public InitService(UserRepository userRepository, AddressRepository addressRepository, CategoryRepository categoryRepository, AuctionRepository auctionRepository, PurchaseRepository purchaseRepository, OfferRepository offerRepository) {
         this.userRepository = userRepository;
         this.addressRepository = addressRepository;
         this.categoryRepository = categoryRepository;
         this.auctionRepository = auctionRepository;
         this.purchaseRepository = purchaseRepository;
+        this.offerRepository = offerRepository;
         init();
     }
 
@@ -32,6 +34,7 @@ public class InitService {
         createSamplePurchases();
         createSampleWatchedAuctions();
         createUserPostedAuctions();
+        createOffers();
 
     }
 
@@ -127,6 +130,7 @@ public class InitService {
         categoryRepository.save(category);
     }
 
+
     private void createSampleUsers() {
         Address address = new Address("Słoneczna",
                 "3b",
@@ -163,6 +167,24 @@ public class InitService {
                 AccountType.PREMIUM,
                 Collections.emptyList());
         userRepository.save(userAccount);
+
+        address = new Address("Jasna",
+                "23",
+                "3-566",
+                "Dolnośląskie",
+                "wrocław");
+        addressRepository.save(address);
+        userAccount = new UserAccount("samplethird@gmail.com",
+                "qwerty",
+                "Anita",
+                "Kowal",
+                address,
+                LocalDate.now(),
+                AccountStatus.ACTIVE,
+                "spongebob.jpg",
+                AccountType.STANDARD,
+                Collections.emptyList());
+        userRepository.save(userAccount);
     }
 
     private void createSamplePurchases() {
@@ -187,7 +209,7 @@ public class InitService {
     }
 
     private void createSampleWatchedAuctions() {
-        Auction auction1 = auctionRepository.findById(16L).orElseThrow();
+        Auction auction1 = auctionRepository.findById(18L).orElseThrow();
         Auction auction2 = auctionRepository.findById(58L).orElseThrow();
         Auction auction3 = auctionRepository.findById(189L).orElseThrow();
 
@@ -209,6 +231,35 @@ public class InitService {
 
         auction = new Auction("Microsuede 7ft Foam Giant Bean Bag Memory", "Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s", "placeholderproduct.jpg", categoryRepository.findByName("Home and Garden").orElseThrow(), "99.99", "15", false, "Kraków", LocalDate.now(), LocalDate.now().plusDays(1L), 23, false, seller);
         auctionRepository.save(auction);
+
+    }
+
+    private void createOffers() {
+        UserAccount seller = userRepository.findById(4L).orElseThrow();
+        UserAccount buyer1 = userRepository.findById(2L).orElseThrow();
+        UserAccount buyer2 = userRepository.findById(6L).orElseThrow();
+
+        Auction auction = new Auction("Beats headphones", "Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s", "beats.jpg", categoryRepository.findByName("Electronics").orElseThrow(), "999.99", "1200", true, "Kraków", LocalDate.now(), LocalDate.now().plusDays(4L), 23, false, seller);
+        auctionRepository.save(auction);
+        Offer offer = new Offer(auction, buyer1, 203);
+        offerRepository.save(offer);
+        offer = new Offer(auction, buyer2, 403);
+        offerRepository.save(offer);
+
+        auction = new Auction("Reebok ZigWild Trail 6 Men's Shoes", "Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s", "shoes.jpg", categoryRepository.findByName("Fashion").orElseThrow(), "350.99", "15", false, "Kraków", LocalDate.now(), LocalDate.now().plusDays(6L), 23, false, seller);
+        auctionRepository.save(auction);
+        offer = new Offer(auction, buyer1, 302);
+        offerRepository.save(offer);
+        offer = new Offer(auction, buyer2, 345);
+        offerRepository.save(offer);
+
+        auction = new Auction("Microsuede 7ft Foam Giant Bean Bag Memory", "Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s", "placeholderproduct.jpg", categoryRepository.findByName("Home and Garden").orElseThrow(), "99.99", "15", false, "Kraków", LocalDate.now(), LocalDate.now().plusDays(1L), 23, false, seller);
+        auctionRepository.save(auction);
+        offer = new Offer(auction, buyer1, 999);
+        offerRepository.save(offer);
+        offer = new Offer(auction, buyer2, 1234);
+        offerRepository.save(offer);
+
 
     }
 

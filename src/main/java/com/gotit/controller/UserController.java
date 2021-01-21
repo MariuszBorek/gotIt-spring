@@ -4,6 +4,7 @@ import com.gotit.dto.AuctionDTO;
 import com.gotit.dto.UserDTO;
 import com.gotit.dto.MessageDTO;
 import com.gotit.service.FileService;
+import com.gotit.service.OfferService;
 import com.gotit.service.UserService;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;

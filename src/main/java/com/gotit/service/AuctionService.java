@@ -15,14 +15,20 @@ public class AuctionService {
     private final CategoryRepository categoryRepository;
     private final PurchaseService purchaseService;
     private final UserRepository userRepository;
+    private final OfferService offerService;
 
-    public AuctionService(AuctionRepository auctionRepository, CategoryRepository categoryRepository, UserRepository userRepository, PurchaseService purchaseService) {
+    public AuctionService(AuctionRepository auctionRepository, CategoryRepository categoryRepository,
+                          UserRepository userRepository, PurchaseService purchaseService, OfferService offerService) {
         this.auctionRepository = auctionRepository;
         this.categoryRepository = categoryRepository;
         this.userRepository = userRepository;
         this.purchaseService = purchaseService;
+        this.offerService = offerService;
     }
 
+    public List<AuctionDTO> getUserAuctionsBid(String email) {
+        return convertAuctionListToAuctionDTOList(offerService.findUserAuctions(email));
+    }
 
     public List<AuctionDTO> findFiveLastAddedAuctions() {
         List<Auction> auctions = auctionRepository.findAll().stream()
@@ -154,5 +160,10 @@ public class AuctionService {
         int numberOfVisits = auction.getNumberOfVisits() + 1;
         auction.setNumberOfVisits(numberOfVisits);
         auctionRepository.save(auction);
+    }
+
+    public AuctionDTO addNewOffer(String offeredPrice, Long auctionId, String email) {
+        System.out.println(offeredPrice + " " + auctionId + " " + email);
+        return null;
     }
 }

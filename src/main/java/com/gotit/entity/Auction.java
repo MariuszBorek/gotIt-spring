@@ -34,11 +34,15 @@ public class Auction {
     @JsonIgnore
     @ManyToOne(fetch = FetchType.EAGER)
     UserAccount auctionOwner;
+    @OneToMany(mappedBy = "auction")
+    private List<Offer> offers;
 
     public Auction() {
     }
 
-    public Auction(String title, String description, String photo, Category category, String minPrice, String buyNowPrice, boolean promotedAuction, String localization, LocalDate dateOfIssue, LocalDate endDate, int numberOfVisits, boolean isFinished, UserAccount auctionOwner) {
+    public Auction(String title, String description, String photo, Category category, String minPrice, String buyNowPrice,
+                   boolean promotedAuction, String localization, LocalDate dateOfIssue, LocalDate endDate, int numberOfVisits,
+                   boolean isFinished, UserAccount auctionOwner) {
         this.title = title;
         this.description = description;
         this.photo = photo;
@@ -166,6 +170,7 @@ public class Auction {
         this.auctionOwner = auctionOwner;
     }
 
+
     @Override
     public boolean equals(Object o) {
         if (this == o) return true;
@@ -184,11 +189,12 @@ public class Auction {
                 Objects.equals(localization, auction.localization) &&
                 Objects.equals(dateOfIssue, auction.dateOfIssue) &&
                 Objects.equals(endDate, auction.endDate) &&
+                Objects.equals(purchase, auction.purchase) &&
                 Objects.equals(auctionOwner, auction.auctionOwner);
     }
 
     @Override
     public int hashCode() {
-        return Objects.hash(id, title, description, photo, category, minPrice, buyNowPrice, promotedAuction, localization, dateOfIssue, endDate, numberOfVisits, isFinished, auctionOwner);
+        return Objects.hash(id, title, description, photo, category, minPrice, buyNowPrice, promotedAuction, localization, dateOfIssue, endDate, numberOfVisits, purchase, isFinished, auctionOwner);
     }
 }
