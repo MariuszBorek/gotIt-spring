@@ -26,8 +26,9 @@ public class AuctionService {
         this.offerService = offerService;
     }
 
+
     public List<AuctionDTO> getUserAuctionsBid(String email) {
-        return convertAuctionListToAuctionDTOList(offerService.findUserAuctions(email));
+        return convertAuctionListToAuctionDTOList(offerService.findUserAuctionsBid(email));
     }
 
     public List<AuctionDTO> findFiveLastAddedAuctions() {
@@ -162,8 +163,10 @@ public class AuctionService {
         auctionRepository.save(auction);
     }
 
-    public AuctionDTO addNewOffer(String offeredPrice, Long auctionId, String email) {
-        System.out.println(offeredPrice + " " + auctionId + " " + email);
-        return null;
+    public void addNewOffer(String offeredPrice, Long auctionId, String userEmail) {
+        Auction auction = auctionRepository.findById(auctionId).orElseThrow();
+        UserAccount userAccount = userRepository.findByEmail(userEmail).orElseThrow();
+        Offer offer = new Offer(auction, userAccount, Double.parseDouble(offeredPrice));
+        offerService.addOffer(offer);
     }
 }

@@ -7,4 +7,5 @@ import java.util.Optional;
 
 public interface OfferRepository  extends JpaRepository<Offer, Long> {
     Optional<List<Offer>> findAllByUserAccount(UserAccount userAccount);
+    Optional<List<Offer>> findAllByAuction(Auction auction);
 }

@@ -1,9 +1,9 @@
 package com.gotit.controller;
 
 import com.gotit.dto.AuctionDTO;
-import com.gotit.dto.MessageDTO;
+import com.gotit.dto.OfferDTO;
 import com.gotit.service.AuctionService;
-import org.aspectj.bridge.Message;
+import com.gotit.service.OfferService;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
@@ -14,9 +14,16 @@ import java.util.List;
 public class AuctionController {
 
     private final AuctionService auctionService;
+    private final OfferService offerService;
 
-    public AuctionController(AuctionService auctionService) {
+    public AuctionController(AuctionService auctionService, OfferService offerService) {
         this.auctionService = auctionService;
+        this.offerService = offerService;
+    }
+
+    @GetMapping(path = "/highest-bid/{auctionId}", produces = "application/json")
+    public OfferDTO getHighestBid(@PathVariable("auctionId") final String auctionId) {
+        return offerService.findTheHighestBidForAnAuction(auctionId);
     }
 
     @GetMapping(path = "/bidding/{email}", produces = "application/json")
@@ -44,10 +51,10 @@ public class AuctionController {
     String str = "/${offeredPrice}/${auctionId}/${this.getUserEmail()}";
 
     @GetMapping(path = "/make-offer/{offeredPrice}/{auctionId}/{email}", produces = "application/json")
-    public AuctionDTO makeAnOffer(@PathVariable("offeredPrice") final String offeredPrice,
+    public void makeAnOffer(@PathVariable("offeredPrice") final String offeredPrice,
                                   @PathVariable("auctionId") final Long auctionId,
                                   @PathVariable("email") final String email) {
-        return auctionService.addNewOffer(offeredPrice, auctionId, email);
+        auctionService.addNewOffer(offeredPrice, auctionId, email);
     }
 
 
