@@ -108,7 +108,8 @@ public class UserService implements UserDetailsService {
 
     }
 
-    public void createUserAuction(MultipartFile imageFile, String category, String title, String description, String minPrice, String buyNowPrice, boolean promotedAuction, String endDate, String email) {
+    public void createUserAuction(MultipartFile imageFile, String category, String title, String description,
+                                  String buyNowPrice, boolean promotedAuction, String endDate, String email, boolean isAuction) {
         String photoName = null;
         try {
             photoName = fileService.saveImage(imageFile);
@@ -117,7 +118,7 @@ public class UserService implements UserDetailsService {
         }
 
         UserAccount userAccount = userRepository.findByEmail(email).orElseThrow();
-        auctionService.createAuction(photoName, category, title, description, minPrice, buyNowPrice, promotedAuction, endDate, userAccount);
+        auctionService.createAuction(photoName, category, title, description, buyNowPrice, promotedAuction, endDate, userAccount, isAuction);
 
     }
 

@@ -19,7 +19,6 @@ public class Auction {
     @JsonIgnore
     @ManyToOne(fetch = FetchType.EAGER)
     private Category category;
-    private String minPrice;
     private String buyNowPrice;
     private boolean promotedAuction;
     private String localization;
@@ -36,18 +35,18 @@ public class Auction {
     UserAccount auctionOwner;
     @OneToMany(mappedBy = "auction")
     private List<Offer> offers;
+    private boolean isAuction;
 
     public Auction() {
     }
 
-    public Auction(String title, String description, String photo, Category category, String minPrice, String buyNowPrice,
+    public Auction(String title, String description, String photo, Category category, String buyNowPrice,
                    boolean promotedAuction, String localization, LocalDate dateOfIssue, LocalDate endDate, int numberOfVisits,
-                   boolean isFinished, UserAccount auctionOwner) {
+                   boolean isFinished, UserAccount auctionOwner, boolean isAuction) {
         this.title = title;
         this.description = description;
         this.photo = photo;
         this.category = category;
-        this.minPrice = minPrice;
         this.buyNowPrice = buyNowPrice;
         this.promotedAuction = promotedAuction;
         this.localization = localization;
@@ -56,6 +55,7 @@ public class Auction {
         this.numberOfVisits = numberOfVisits;
         this.isFinished = isFinished;
         this.auctionOwner = auctionOwner;
+        this.isAuction = isAuction;
     }
 
     public Long getId() {
@@ -96,14 +96,6 @@ public class Auction {
 
     public void setCategory(Category category) {
         this.category = category;
-    }
-
-    public String getMinPrice() {
-        return minPrice;
-    }
-
-    public void setMinPrice(String minPrice) {
-        this.minPrice = minPrice;
     }
 
     public String getBuyNowPrice() {
@@ -170,6 +162,13 @@ public class Auction {
         this.auctionOwner = auctionOwner;
     }
 
+    public boolean isAuction() {
+        return isAuction;
+    }
+
+    public void setAuction(boolean auction) {
+        isAuction = auction;
+    }
 
     @Override
     public boolean equals(Object o) {
@@ -184,17 +183,17 @@ public class Auction {
                 Objects.equals(description, auction.description) &&
                 Objects.equals(photo, auction.photo) &&
                 Objects.equals(category, auction.category) &&
-                Objects.equals(minPrice, auction.minPrice) &&
                 Objects.equals(buyNowPrice, auction.buyNowPrice) &&
                 Objects.equals(localization, auction.localization) &&
                 Objects.equals(dateOfIssue, auction.dateOfIssue) &&
                 Objects.equals(endDate, auction.endDate) &&
                 Objects.equals(purchase, auction.purchase) &&
-                Objects.equals(auctionOwner, auction.auctionOwner);
+                Objects.equals(auctionOwner, auction.auctionOwner) &&
+                Objects.equals(isAuction, auction.isAuction);
     }
 
     @Override
     public int hashCode() {
-        return Objects.hash(id, title, description, photo, category, minPrice, buyNowPrice, promotedAuction, localization, dateOfIssue, endDate, numberOfVisits, purchase, isFinished, auctionOwner);
+        return Objects.hash(id, title, description, photo, category, buyNowPrice, promotedAuction, localization, dateOfIssue, endDate, numberOfVisits, purchase, isFinished, auctionOwner, isAuction);
     }
 }

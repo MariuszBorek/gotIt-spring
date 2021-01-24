@@ -10,7 +10,6 @@ public class AuctionDTO {
     private String description;
     private String photo;
     private String category;
-    private String minPrice;
     private String buyNowPrice;
     private boolean promotedAuction;
     private String localization;
@@ -19,17 +18,19 @@ public class AuctionDTO {
     private int numberOfVisits;
     private boolean finished;
     private String owner;
+    private boolean isAuction;
 
     public AuctionDTO() {
     }
 
-    public AuctionDTO(String title, Long id, String description, String photo, String category, String minPrice, String buyNowPrice, boolean promotedAuction, String localization, LocalDate dateOfIssue, LocalDate endDate, int numberOfVisits, boolean finished, String owner) {
+    public AuctionDTO(String title, Long id, String description, String photo, String category, String buyNowPrice,
+                      boolean promotedAuction, String localization, LocalDate dateOfIssue, LocalDate endDate,
+                      int numberOfVisits, boolean finished, String owner, boolean isAuction) {
         this.id = id;
         this.title = title;
         this.description = description;
         this.photo = photo;
         this.category = category;
-        this.minPrice = minPrice;
         this.buyNowPrice = buyNowPrice;
         this.promotedAuction = promotedAuction;
         this.localization = localization;
@@ -38,6 +39,7 @@ public class AuctionDTO {
         this.numberOfVisits = numberOfVisits;
         this.finished = finished;
         this.owner = owner;
+        this.isAuction = isAuction;
     }
 
     public Long getId() {
@@ -82,15 +84,6 @@ public class AuctionDTO {
 
     public AuctionDTO setCategory(String category) {
         this.category = category;
-        return this;
-    }
-
-    public String getMinPrice() {
-        return minPrice;
-    }
-
-    public AuctionDTO setMinPrice(String minPrice) {
-        this.minPrice = minPrice;
         return this;
     }
 
@@ -166,6 +159,15 @@ public class AuctionDTO {
         return this;
     }
 
+    public boolean isAuction() {
+        return isAuction;
+    }
+
+    public AuctionDTO setAuction(boolean auction) {
+        isAuction = auction;
+        return this;
+    }
+
     public AuctionDTO build() {
         AuctionDTO auctionDTO = new AuctionDTO();
         auctionDTO.id = id;
@@ -173,7 +175,6 @@ public class AuctionDTO {
         auctionDTO.description = description;
         auctionDTO.photo = photo;
         auctionDTO.category = category;
-        auctionDTO.minPrice = minPrice;
         auctionDTO.buyNowPrice = buyNowPrice;
         auctionDTO.promotedAuction = promotedAuction;
         auctionDTO.localization = localization;
@@ -182,6 +183,7 @@ public class AuctionDTO {
         auctionDTO.numberOfVisits = numberOfVisits;
         auctionDTO.finished = finished;
         auctionDTO.owner = owner;
+        auctionDTO.isAuction = isAuction;
         return auctionDTO;
     }
 }

@@ -26,12 +26,12 @@ public class UserController {
                               @RequestParam("category") final String category,
                               @RequestParam("title") final String title,
                               @RequestParam("description") final String description,
-                              @RequestParam("minPrice") final String minPrice,
                               @RequestParam("buyNowPrice") final String buyNowPrice,
                               @RequestParam("promotedAuction")final  boolean promotedAuction,
                               @RequestParam("endDate") final String endDate,
+                              @RequestParam("isAuction") final boolean isAuction, // TODO add input in frontend
                               @PathVariable("email") final String email) throws IOException {
-        userService.createUserAuction(imageFile, category, title, description, minPrice, buyNowPrice, promotedAuction, endDate, email);
+        userService.createUserAuction(imageFile, category, title, description, buyNowPrice, promotedAuction, endDate, email, isAuction);
     }
 
 
@@ -39,7 +39,6 @@ public class UserController {
     public List<AuctionDTO> getUserPostedAuctions(@PathVariable("email") final String email) {
         return userService.findUserPostedAuctions(email);
     }
-
 
     @PostMapping("/update-user-data/{email}")
     public boolean updateUserData(@RequestBody UserDTO userDTO,

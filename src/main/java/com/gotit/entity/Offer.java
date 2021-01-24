@@ -77,4 +77,6 @@ public class Offer {
     public int hashCode() {
         return Objects.hash(id, auction, userAccount, price);
     }
+
+
 }

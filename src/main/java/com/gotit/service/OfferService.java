@@ -4,6 +4,7 @@ import com.gotit.dto.OfferDTO;
 import com.gotit.entity.*;
 import org.springframework.stereotype.Service;
 
+import java.util.Comparator;
 import java.util.List;
 import java.util.stream.Collectors;
 
@@ -32,6 +33,9 @@ public class OfferService {
 
     public OfferDTO findTheHighestBidForAnAuction(String auctionId) {
         Auction auction = auctionRepository.findById(Long.parseLong(auctionId)).orElseThrow();
+        if(!auction.isAuction()) {
+            return null;
+        }
         return mapOfferToOfferDTO(offerRepository.findAllByAuction(auction).orElseThrow().stream().min((o1, o2) -> (int) o2.getPrice() - (int) o1.getPrice()).orElseThrow());
     }
 

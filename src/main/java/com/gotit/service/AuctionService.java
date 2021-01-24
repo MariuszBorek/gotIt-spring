@@ -62,7 +62,6 @@ public class AuctionService {
                 .setDescription(auction.getDescription())
                 .setPhoto(auction.getPhoto())
                 .setCategory(auction.getCategory().getName())
-                .setMinPrice(auction.getMinPrice())
                 .setBuyNowPrice(auction.getBuyNowPrice())
                 .setPromotedAuction(auction.getPromotedAuction())
                 .setLocalization(auction.getLocalization())
@@ -71,6 +70,7 @@ public class AuctionService {
                 .setNumberOfVisits(auction.getNumberOfVisits())
                 .setFinished(auction.isFinished())
                 .setOwner(auction.getAuctionOwner().getEmail())
+                .setAuction(auction.isAuction())
                 .build();
     }
 
@@ -145,15 +145,16 @@ public class AuctionService {
     }
 
 
-    public void createAuction(String photoName, String category, String title, String description, String minPrice,
-                              String buyNowPrice, boolean promotedAuction, String endDate, UserAccount auctionOwner) {
+    public void createAuction(String photoName, String category, String title, String description,
+                              String buyNowPrice, boolean promotedAuction, String endDate,
+                              UserAccount auctionOwner, boolean isAuction) {
         Category foundCategory = categoryRepository.findAll().stream()
                 .filter(e -> e.getName().equals(category))
                 .findFirst().orElseThrow();
 
-        Auction auction = new Auction(title, description, photoName, foundCategory, minPrice, buyNowPrice,
+        Auction auction = new Auction(title, description, photoName, foundCategory, buyNowPrice,
                 promotedAuction, auctionOwner.getAddress().getCity(), LocalDate.now(),
-                LocalDate.now().plusDays(Long.parseLong(endDate)), 0, false, auctionOwner);
+                LocalDate.now().plusDays(Long.parseLong(endDate)), 0, false, auctionOwner, isAuction);
         auctionRepository.save(auction);
     }
 
