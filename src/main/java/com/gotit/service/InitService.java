@@ -7,7 +7,7 @@ import java.time.LocalDate;
 import java.util.Collections;
 import java.util.List;
 
-//@Service
+@Service
 public class InitService {
 
     private final UserRepository userRepository;
@@ -29,12 +29,12 @@ public class InitService {
 
     private void init() {
         createSampleUsers();
-        createCategories();
-        createAuctions();
-        createSamplePurchases();
-        createSampleWatchedAuctions();
-        createUserPostedAuctions();
-        createOffers();
+//        createCategories();
+//        createAuctions();
+//        createSamplePurchases();
+//        createSampleWatchedAuctions();
+//        createUserPostedAuctions();
+//        createOffers();
 
     }
 
