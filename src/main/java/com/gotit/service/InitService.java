@@ -31,10 +31,10 @@ public class InitService {
         createSampleUsers();
         createCategories();
         createAuctions();
-//        createSamplePurchases();
-//        createSampleWatchedAuctions();
-//        createUserPostedAuctions();
-//        createOffers();
+        createSamplePurchases();
+        createSampleWatchedAuctions();
+        createUserPostedAuctions();
+        createOffers();
 
     }
 
