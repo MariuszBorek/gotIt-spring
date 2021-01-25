@@ -7,7 +7,7 @@ import java.time.LocalDate;
 import java.util.Collections;
 import java.util.List;
 
-@Service
+//@Service
 public class InitService {
 
     private final UserRepository userRepository;
