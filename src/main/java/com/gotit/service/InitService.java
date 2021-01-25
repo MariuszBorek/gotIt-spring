@@ -29,8 +29,8 @@ public class InitService {
 
     private void init() {
         createSampleUsers();
-//        createCategories();
-//        createAuctions();
+        createCategories();
+        createAuctions();
 //        createSamplePurchases();
 //        createSampleWatchedAuctions();
 //        createUserPostedAuctions();
