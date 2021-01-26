@@ -110,11 +110,13 @@ public class UserService implements UserDetailsService {
 
     public void createUserAuction(MultipartFile imageFile, String category, String title, String description,
                                   String buyNowPrice, boolean promotedAuction, String endDate, boolean isAuction, String email) {
-        String photoName = null;
-        try {
-            photoName = fileService.saveImage(imageFile);
-        } catch (Exception e) {
-            e.printStackTrace();
+        String photoName = "placeholderproduct.jpg";
+        if(!imageFile.isEmpty()) {
+            try {
+                photoName = fileService.saveImage(imageFile);
+            } catch (Exception e) {
+                e.printStackTrace();
+            }
         }
 
         UserAccount userAccount = userRepository.findByEmail(email).orElseThrow();
