@@ -29,9 +29,9 @@ public class UserController {
                               @RequestParam("buyNowPrice") final String buyNowPrice,
                               @RequestParam("promotedAuction")final  boolean promotedAuction,
                               @RequestParam("endDate") final String endDate,
-                              @RequestParam("isAuction") final boolean isAuction, // TODO add input in frontend
+                              @RequestParam("isAuction") final boolean isAuction,
                               @PathVariable("email") final String email) throws IOException {
-        userService.createUserAuction(imageFile, category, title, description, buyNowPrice, promotedAuction, endDate, email, isAuction);
+        userService.createUserAuction(imageFile, category, title, description, buyNowPrice, promotedAuction, endDate, isAuction, email);
     }
 
 

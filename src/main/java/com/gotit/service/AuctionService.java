@@ -148,6 +148,7 @@ public class AuctionService {
     public void createAuction(String photoName, String category, String title, String description,
                               String buyNowPrice, boolean promotedAuction, String endDate,
                               UserAccount auctionOwner, boolean isAuction) {
+
         Category foundCategory = categoryRepository.findAll().stream()
                 .filter(e -> e.getName().equals(category))
                 .findFirst().orElseThrow();

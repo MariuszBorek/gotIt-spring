@@ -48,8 +48,6 @@ public class AuctionController {
         return auctionService.buyProductById(id, email);
     }
 
-    String str = "/${offeredPrice}/${auctionId}/${this.getUserEmail()}";
-
     @GetMapping(path = "/make-offer/{offeredPrice}/{auctionId}/{email}", produces = "application/json")
     public void makeAnOffer(@PathVariable("offeredPrice") final String offeredPrice,
                                   @PathVariable("auctionId") final Long auctionId,

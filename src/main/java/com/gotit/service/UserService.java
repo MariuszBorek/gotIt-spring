@@ -109,7 +109,7 @@ public class UserService implements UserDetailsService {
     }
 
     public void createUserAuction(MultipartFile imageFile, String category, String title, String description,
-                                  String buyNowPrice, boolean promotedAuction, String endDate, String email, boolean isAuction) {
+                                  String buyNowPrice, boolean promotedAuction, String endDate, boolean isAuction, String email) {
         String photoName = null;
         try {
             photoName = fileService.saveImage(imageFile);
