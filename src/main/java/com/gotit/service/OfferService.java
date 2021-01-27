@@ -6,6 +6,7 @@ import org.springframework.stereotype.Service;
 
 import java.util.Comparator;
 import java.util.List;
+import java.util.NoSuchElementException;
 import java.util.function.Supplier;
 import java.util.stream.Collectors;
 
@@ -23,7 +24,13 @@ public class OfferService {
     }
 
     public void addOffer(Offer offer) {
-        offerRepository.save(offer);
+        try {
+            Offer foundOffer = offerRepository.findByAuctionAndUserAccount(offer.getAuction(), offer.getUserAccount()).orElseThrow();
+            foundOffer.setPrice(offer.getPrice());
+            offerRepository.save(foundOffer);
+        } catch (NoSuchElementException e) {
+            offerRepository.save(offer);
+        }
     }
 
     public List<Auction> findUserAuctionsBid(String email) {
