@@ -253,7 +253,7 @@ public class InitService {
         offer = new Offer(auction, buyer2, 345);
         offerRepository.save(offer);
 
-        auction = new Auction("Egg Chair", "Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s", "chair.png", categoryRepository.findByName("Home and Garden").orElseThrow(), "99.99", false, "Kraków", LocalDate.now(), LocalDate.now().plusDays(1L), 23, false, seller, true);
+        auction = new Auction("Egg Chair", "Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s", "chair.png", categoryRepository.findByName("Home and Garden").orElseThrow(), "99.99", true, "Kraków", LocalDate.now(), LocalDate.now().plusDays(1L), 23, false, seller, true);
         auctionRepository.save(auction);
         offer = new Offer(auction, buyer1, 999);
         offerRepository.save(offer);

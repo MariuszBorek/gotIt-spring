@@ -169,7 +169,6 @@ public class AuctionService {
         Auction auction = auctionRepository.findById(auctionId).orElseThrow();
         UserAccount userAccount = userRepository.findByEmail(userEmail).orElseThrow();
         Offer offer = new Offer(auction, userAccount, Double.parseDouble(offeredPrice));
-        
         offerService.addOffer(offer);
     }
 }
