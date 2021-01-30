@@ -3,8 +3,6 @@ package com.gotit.service;
 import com.gotit.dto.AuctionDTO;
 import com.gotit.dto.UserDTO;
 import com.gotit.entity.*;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
@@ -15,7 +13,6 @@ import org.springframework.web.multipart.MultipartFile;
 import java.time.LocalDate;
 import java.util.Collections;
 import java.util.List;
-import java.util.NoSuchElementException;
 import java.util.stream.Collectors;
 
 @Service("userService")
@@ -26,7 +23,6 @@ public class UserService implements UserDetailsService {
     private final AuctionService auctionService;
     private final FileService fileService;
     private final AuctionRepository auctionRepository;
-    private final Logger logger = LoggerFactory.getLogger(UserService.class);
 
     public UserService(UserRepository userRepository, AddressRepository addressRepository, AuctionService auctionService, FileService fileService, AuctionRepository auctionRepository) {
         this.userRepository = userRepository;
@@ -61,17 +57,6 @@ public class UserService implements UserDetailsService {
                 Collections.emptyList());
         userRepository.save(userAccount);
     }
-
-    public List<AuctionDTO> findWatchedAuctions(String email) {
-        try {
-            UserAccount userAccount = userRepository.findByEmail(email).orElseThrow();
-            return auctionService.convertAuctionListToAuctionDTOList(userAccount.getWatchedAuctions());
-        } catch (NoSuchElementException e) {
-            logger.info("user do not load yet");
-            return null;
-        }
-    }
-
 
     public UserAccount getUser(String email) {
         return userRepository.findByEmail(email).orElseThrow();
@@ -118,10 +103,8 @@ public class UserService implements UserDetailsService {
                 e.printStackTrace();
             }
         }
-
         UserAccount userAccount = userRepository.findByEmail(email).orElseThrow();
         auctionService.createAuction(photoName, category, title, description, buyNowPrice, promotedAuction, endDate, userAccount, isAuction);
-
     }
 
     public List<AuctionDTO> findUserPostedAuctions(String email) {

@@ -5,7 +5,9 @@ import com.gotit.entity.*;
 import org.springframework.stereotype.Service;
 
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.List;
+import java.util.function.Supplier;
 
 @Service
 public class PurchaseService {
@@ -24,7 +26,7 @@ public class PurchaseService {
 
     public List<Purchase> getAllPurchasesOfUser(String userEmail) {
         UserAccount userAccount = userRepository.findByEmail(userEmail).orElseThrow();
-        return purchaseRepository.findAllByUserAccount(userAccount).orElseThrow();
+        return purchaseRepository.findAllByUserAccount(userAccount).orElse(Collections.emptyList());
     }
 
     public PurchaseDTO mapPurchaseToPurchaseDTO(Purchase purchase) {

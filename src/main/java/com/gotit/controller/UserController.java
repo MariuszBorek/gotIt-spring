@@ -83,9 +83,5 @@ public class UserController {
         return userService.convertUserAccountEntityToUserDTO(userService.getUser(email));
     }
 
-    @GetMapping(path = "/watched-auctions/{email}", produces = "application/json")
-    public List<AuctionDTO> getWatchedAuctions(@PathVariable("email") final String email) {
-        return userService.findWatchedAuctions(email);
-    }
 
 }
