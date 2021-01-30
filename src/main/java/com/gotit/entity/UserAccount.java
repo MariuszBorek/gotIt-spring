@@ -42,6 +42,8 @@ public class UserAccount implements UserDetails {
     private List<Auction> listedAuctions;
     @OneToOne(mappedBy = "userAccount")
     private Offer offers;
+    @OneToMany(mappedBy = "userAccount")
+    private List<Cart> carts;
 
     public UserAccount() {
     }

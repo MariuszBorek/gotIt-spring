@@ -3,6 +3,7 @@ package com.gotit.controller;
 import com.gotit.dto.AuctionDTO;
 import com.gotit.dto.UserDTO;
 import com.gotit.dto.MessageDTO;
+import com.gotit.service.CartService;
 import com.gotit.service.UserService;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
@@ -16,9 +17,28 @@ import java.util.List;
 public class UserController {
 
     private final UserService userService;
+    private final CartService cartService;
 
-    public UserController(UserService userService) {
+    public UserController(UserService userService, CartService cartService) {
         this.userService = userService;
+        this.cartService = cartService;
+    }
+
+    @GetMapping("/check-cart-size/{email}")
+    public int getCartSize(@PathVariable("email") final String email) {
+        return cartService.checkCartSize(email);
+    }
+
+    @GetMapping("/add-to-cart/{email}/{auctionId}")
+    public boolean updateUserData(@PathVariable("email") final String email,
+                                  @PathVariable("auctionId") final String auctionId) {
+        cartService.addAuctionToCart(email, auctionId);
+        return true;
+    }
+
+    @GetMapping(path = "/cart/{email}", produces = "application/json")
+    public List<AuctionDTO> getAuctionsInCart(@PathVariable("email") final String email) {
+        return cartService.findAllAuctionsInUserCart(email);
     }
 
     @PostMapping("/set-up-auction/{email}")

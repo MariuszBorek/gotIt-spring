@@ -36,6 +36,8 @@ public class Auction {
     @OneToMany(mappedBy = "auction")
     private List<Offer> offers;
     private boolean isAuction;
+    @ManyToMany(mappedBy = "auctions")
+    private List<Cart> carts;
 
     public Auction() {
     }

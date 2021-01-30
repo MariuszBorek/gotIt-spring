@@ -68,7 +68,7 @@ public class AuctionController {
 
     @GetMapping(path = "/{id}", produces = "application/json")
     public AuctionDTO getAuctionById(@PathVariable("id") final String id) {
-        return auctionService.findAuction(id);
+        return auctionService.findAuctionDTO(id);
     }
 
     @GetMapping(path = "/last-added-auctions", produces = "application/json")

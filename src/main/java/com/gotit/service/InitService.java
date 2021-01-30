@@ -16,14 +16,18 @@ public class InitService {
     private final AuctionRepository auctionRepository;
     private final PurchaseRepository purchaseRepository;
     private final OfferRepository offerRepository;
+    private final CartRepository cartRepository;
 
-    public InitService(UserRepository userRepository, AddressRepository addressRepository, CategoryRepository categoryRepository, AuctionRepository auctionRepository, PurchaseRepository purchaseRepository, OfferRepository offerRepository) {
+    public InitService(UserRepository userRepository, AddressRepository addressRepository,
+                       CategoryRepository categoryRepository, AuctionRepository auctionRepository,
+                       PurchaseRepository purchaseRepository, OfferRepository offerRepository, CartRepository cartRepository) {
         this.userRepository = userRepository;
         this.addressRepository = addressRepository;
         this.categoryRepository = categoryRepository;
         this.auctionRepository = auctionRepository;
         this.purchaseRepository = purchaseRepository;
         this.offerRepository = offerRepository;
+        this.cartRepository = cartRepository;
         init();
     }
 
@@ -35,6 +39,7 @@ public class InitService {
         createSampleWatchedAuctions();
         createUserPostedAuctions();
         createOffers();
+        createSampleCart();
 
     }
 
@@ -259,10 +264,17 @@ public class InitService {
         offerRepository.save(offer);
         offer = new Offer(auction, buyer2, 1234);
         offerRepository.save(offer);
-
-
     }
 
+    void createSampleCart() {
+        UserAccount userAccount = userRepository.findById(2L).orElseThrow();
+
+        Auction auction1 = auctionRepository.findById(148L).orElseThrow();
+        Auction auction2 = auctionRepository.findById(212L).orElseThrow();
+        Auction auction3 = auctionRepository.findById(230L).orElseThrow();
+        Cart cart = new Cart(userAccount, List.of(auction1, auction2, auction3));
+        cartRepository.save(cart);
+    }
 
 }
 

@@ -27,6 +27,7 @@ public class AuctionService {
     }
 
 
+
     public List<AuctionDTO> getUserAuctionsBid(String email) {
         return convertAuctionListToAuctionDTOList(offerService.findUserAuctionsBid(email));
     }
@@ -84,10 +85,14 @@ public class AuctionService {
     }
 
 
-    public AuctionDTO findAuction(String id) {
+    public AuctionDTO findAuctionDTO(String id) {
         Auction auction = auctionRepository.findById(Long.parseLong(id)).orElseThrow();
         incrementVisits(auction);
         return mapAuctionToAuctionDTO(auction);
+    }
+
+    public Auction findAuctionById(String id) {
+        return auctionRepository.findById(Long.parseLong(id)).orElseThrow();
     }
 
     public List<AuctionDTO> findCategoryProducts(String categoryName) {

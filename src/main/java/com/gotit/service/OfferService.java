@@ -35,8 +35,12 @@ public class OfferService {
 
     public List<Auction> findUserAuctionsBid(String email) {
         UserAccount userAccount = userRepository.findByEmail(email).orElseThrow();
-        List<Offer> offers = offerRepository.findAllByUserAccount(userAccount).orElseThrow();
-        return offers.stream().map(Offer::getAuction).collect(Collectors.toList());
+        try {
+            List<Offer> offers = offerRepository.findAllByUserAccount(userAccount).orElseThrow();
+            return offers.stream().map(Offer::getAuction).collect(Collectors.toList());
+        } catch(NoSuchElementException e) {
+            return List.of(new Auction());
+        }
     }
 
     public OfferDTO findTheHighestBidForAnAuction(String auctionId) {
