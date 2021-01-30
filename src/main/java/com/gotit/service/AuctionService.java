@@ -2,6 +2,8 @@ package com.gotit.service;
 
 import com.gotit.dto.AuctionDTO;
 import com.gotit.entity.*;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Service;
 
 import java.time.LocalDate;
@@ -16,6 +18,7 @@ public class AuctionService {
     private final PurchaseService purchaseService;
     private final UserRepository userRepository;
     private final OfferService offerService;
+    private final Logger logger = LoggerFactory.getLogger(AuctionService.class);
 
     public AuctionService(AuctionRepository auctionRepository, CategoryRepository categoryRepository,
                           UserRepository userRepository, PurchaseService purchaseService, OfferService offerService) {
@@ -29,7 +32,11 @@ public class AuctionService {
 
 
     public List<AuctionDTO> getUserAuctionsBid(String email) {
-        return convertAuctionListToAuctionDTOList(offerService.findUserAuctionsBid(email));
+        List<Auction> userAuctionsBid = offerService.findUserAuctionsBid(email);
+        if(userAuctionsBid.isEmpty()) {
+            return Collections.emptyList();
+        }
+        return convertAuctionListToAuctionDTOList(userAuctionsBid);
     }
 
     public List<AuctionDTO> findFiveLastAddedAuctions() {
@@ -78,8 +85,11 @@ public class AuctionService {
     public List<AuctionDTO> convertAuctionListToAuctionDTOList(List<Auction> auctions) {
         List<AuctionDTO> auctionsDTO = new ArrayList<>();
         for (Auction auction : auctions) {
-            auctionsDTO.add(mapAuctionToAuctionDTO(auction)
-            );
+            try {
+                auctionsDTO.add(mapAuctionToAuctionDTO(auction));
+            } catch(NullPointerException e) {
+                logger.info("there is no bid auction");
+            }
         }
         return auctionsDTO;
     }
@@ -172,6 +182,9 @@ public class AuctionService {
 
     public void addNewOffer(String offeredPrice, Long auctionId, String userEmail) {
         Auction auction = auctionRepository.findById(auctionId).orElseThrow();
+        if(!auction.isAuction()) {
+            return;
+        }
         UserAccount userAccount = userRepository.findByEmail(userEmail).orElseThrow();
         Offer offer = new Offer(auction, userAccount, Double.parseDouble(offeredPrice));
         offerService.addOffer(offer);
