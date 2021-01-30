@@ -159,11 +159,11 @@ public class AuctionDTO {
         return this;
     }
 
-    public boolean isAuction() {
+    public boolean getIsAuction() {
         return isAuction;
     }
 
-    public AuctionDTO setAuction(boolean auction) {
+    public AuctionDTO setIsAuction(boolean auction) {
         isAuction = auction;
         return this;
     }

@@ -46,14 +46,6 @@ public class InitService {
     private void createAuctions() {
         UserAccount seller = userRepository.findById(4L).orElseThrow();
         Auction auction = null;
-        for (int i = 0; i < 15; i++) {
-            auction = new Auction("Apple iPhone XS - 64GB - Gold (T-Mobile) A1920 (CDMA + GSM)" + i, "Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s" + i, "iphone.png", categoryRepository.findByName("Electronics").orElseThrow(), "7" + i, false, "Kraków", LocalDate.now().minusDays(2).plusDays(i), LocalDate.now().plusDays(i), 23 + i, false, seller, false);
-            auctionRepository.save(auction);
-        }
-        for (int i = 0; i < 15; i++) {
-            auction = new Auction("Apple iPhone 11 - 120GB - Black Like New!!! premium" + i, "Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s", "iphone2.jpg", categoryRepository.findByName("Electronics").orElseThrow(), "4" + i, true, "Kraków", LocalDate.now().minusDays(2).plusDays(i), LocalDate.now().plusDays(i), 23 + i, false, seller, false);
-            auctionRepository.save(auction);
-        }
         for (int i = 0; i < 20; i++) {
             auction = new Auction("Reebok ZigWild Trail 6 Men's Shoes " + i, "Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s", "shoes rebook.png", categoryRepository.findByName("Fashion").orElseThrow(), "8" + i, false, "Kraków", LocalDate.now().minusDays(2).plusDays(i), LocalDate.now().plusDays(i), 23 + i, false, seller, false);
             auctionRepository.save(auction);
@@ -244,6 +236,19 @@ public class InitService {
         offerRepository.save(offer);
         offer = new Offer(auction, buyer2, 1234);
         offerRepository.save(offer);
+
+        for (int i = 0; i < 15; i++) {
+            auction = new Auction("Apple iPhone XS - 64GB - Gold (T-Mobile) A1920 (CDMA + GSM)" + i, "Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s" + i, "iphone.png", categoryRepository.findByName("Electronics").orElseThrow(), "7" + i, false, "Kraków", LocalDate.now().minusDays(2).plusDays(i), LocalDate.now().plusDays(i), 23 + i, false, seller, true);
+            auctionRepository.save(auction);
+            offer = new Offer(auction, buyer2, 3400.67);
+            offerRepository.save(offer);
+        }
+        for (int i = 0; i < 15; i++) {
+            auction = new Auction("Apple iPhone 11 - 120GB - Black Like New!!! premium" + i, "Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s", "iphone2.jpg", categoryRepository.findByName("Electronics").orElseThrow(), "4" + i, true, "Kraków", LocalDate.now().minusDays(2).plusDays(i), LocalDate.now().plusDays(i), 23 + i, false, seller, true);
+            auctionRepository.save(auction);
+            offer = new Offer(auction, buyer2, 5000.67);
+            offerRepository.save(offer);
+        }
 
         for (int i = 0; i < 15; i++) {
             auction = new Auction("Motor yamaha - new!!!" + i, "Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s", "yamaha.jpg", categoryRepository.findByName("Motors").orElseThrow(), "5" + i, false, "Kraków", LocalDate.now().plusDays(i), LocalDate.now().minusDays(2).plusDays(i), 23 + i, false, seller, true);

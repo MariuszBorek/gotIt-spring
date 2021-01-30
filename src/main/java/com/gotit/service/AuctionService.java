@@ -84,7 +84,7 @@ public class AuctionService {
                 .setNumberOfVisits(auction.getNumberOfVisits())
                 .setFinished(auction.isFinished())
                 .setOwner(auction.getAuctionOwner().getEmail())
-                .setAuction(auction.isAuction())
+                .setIsAuction(auction.isAuction())
                 .build();
     }
 
