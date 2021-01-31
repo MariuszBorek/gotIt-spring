@@ -51,7 +51,10 @@ public class CartService {
     }
 
 
-
-
-
+    public List<AuctionDTO> deleteProductFromCart(String email, String auctionId) {
+        Cart actualCart = cartRepository.findByUserAccount(userRepository.findByEmail(email).orElseThrow()).orElseThrow();
+        actualCart.getAuctions().remove(auctionService.findAuctionById(auctionId));
+        cartRepository.save(actualCart);
+        return auctionService.convertAuctionListToAuctionDTOList(actualCart.getAuctions());
+    }
 }

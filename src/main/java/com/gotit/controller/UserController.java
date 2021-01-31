@@ -24,6 +24,12 @@ public class UserController {
         this.cartService = cartService;
     }
 
+    @DeleteMapping("/remove-product-from-cart/{email}/{auctionId}")
+    public List<AuctionDTO> removeProductFromCart(@PathVariable("email") final String email,
+                                                  @PathVariable("auctionId") final String auctionId) {
+        return cartService.deleteProductFromCart(email, auctionId);
+    }
+
     @GetMapping("/check-cart-size/{email}")
     public int getCartSize(@PathVariable("email") final String email) {
         return cartService.checkCartSize(email);
