@@ -91,4 +91,9 @@ public class AuctionController {
         return auctionService.findFiveEndedAuctions();
     }
 
+    @GetMapping(path = "/premium-auctions", produces = "application/json")
+    public List<AuctionDTO> getFivePremiumAuctions() {
+        return auctionService.findFivePremiumAuctions();
+    }
+
 }

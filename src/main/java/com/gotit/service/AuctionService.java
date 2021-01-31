@@ -193,4 +193,16 @@ public class AuctionService {
         Offer offer = new Offer(auction, userAccount, Double.parseDouble(offeredPrice));
         offerService.addOffer(offer);
     }
+
+    public List<AuctionDTO> findFivePremiumAuctions() {
+        List<Auction> collect = auctionRepository.findAll().stream()
+                .filter(Auction::getPromotedAuction)
+                .collect(Collectors.toList());
+        Random random = new Random();
+        List<AuctionDTO> foundRandomAuctions = new ArrayList<>(5);
+        for (int i = 0; i < 5; i++) {
+            foundRandomAuctions.add(mapAuctionToAuctionDTO(collect.get(random.nextInt(collect.size()))));
+        }
+        return foundRandomAuctions;
+    }
 }
