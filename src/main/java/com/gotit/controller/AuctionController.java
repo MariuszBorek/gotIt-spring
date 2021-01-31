@@ -2,6 +2,7 @@ package com.gotit.controller;
 
 import com.gotit.dto.AuctionDTO;
 import com.gotit.dto.OfferDTO;
+import com.gotit.entity.Auction;
 import com.gotit.service.AuctionService;
 import com.gotit.service.OfferService;
 import org.springframework.web.bind.annotation.*;
@@ -19,6 +20,19 @@ public class AuctionController {
     public AuctionController(AuctionService auctionService, OfferService offerService) {
         this.auctionService = auctionService;
         this.offerService = offerService;
+    }
+
+    String url = " http://localhost:8080/auction/filter/o/false/all/nonSelect/0/0";
+
+    @GetMapping(path = "/filter/{phrase}/{promotedAuction}/{auctionType}/{category}/{minPrice}/{maxPrice}",
+            produces = "application/json")
+    public List<AuctionDTO> getFilteredAuctions(@PathVariable("phrase") final String phrase,
+                                             @PathVariable("promotedAuction") final String promotedAuction,
+                                             @PathVariable("auctionType") final String auctionType,
+                                             @PathVariable("category") final String category,
+                                             @PathVariable("minPrice") final String minPrice,
+                                             @PathVariable("maxPrice") final String maxPrice) {
+        return auctionService.findFilteredAuctions(phrase, promotedAuction, auctionType, category, minPrice, maxPrice);
     }
 
     @GetMapping(path = "/highest-bid/{auctionId}", produces = "application/json")

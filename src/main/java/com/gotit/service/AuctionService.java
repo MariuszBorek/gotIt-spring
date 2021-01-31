@@ -205,4 +205,59 @@ public class AuctionService {
         }
         return foundRandomAuctions;
     }
+
+    public List<AuctionDTO> findFilteredAuctions(String phrase, String promotedAuction, String auctionType, String category, String minPrice, String maxPrice) {
+        return convertAuctionListToAuctionDTOList(auctionRepository.findAll().stream()
+                .filter(e -> e.getTitle().toLowerCase().matches(".*" + phrase.toLowerCase() + ".*"))
+                .filter(e -> checkIfUserCheckedPromotedAuction(promotedAuction, e))
+                .filter(e -> checkWhatAuctionTypeUserChecked(auctionType, e))
+                .filter(e -> checkWhatCategoryUseUsed(category, e))
+                .filter(e -> checkIfUserTypedMinPrice(minPrice, e))
+                .filter(e -> checkIfUserTypedMaxPrice(maxPrice, e))
+                .collect(Collectors.toList()));
+    }
+
+    private boolean checkIfUserTypedMaxPrice(String maxPrice, Auction auction) {
+        if(maxPrice.isEmpty() || maxPrice.isBlank()) {
+            return true;
+        }
+        if (!maxPrice.equals("0")) {
+            return Double.parseDouble(auction.getBuyNowPrice()) <= Double.parseDouble(maxPrice);
+        }
+        return true;
+    }
+
+    private boolean checkIfUserTypedMinPrice(String minPrice, Auction auction) {
+        if(minPrice.isEmpty() || minPrice.isBlank()) {
+            return true;
+        }
+        if (!minPrice.equals("0")) {
+            return Double.parseDouble(auction.getBuyNowPrice()) >= Double.parseDouble(minPrice);
+        }
+        return true;
+    }
+
+    private boolean checkWhatCategoryUseUsed(String category, Auction auction) {
+        if (!category.equals("Choose category")) {
+            return auction.getCategory().getName().equals(category);
+        }
+        return true;
+    }
+
+    private boolean checkIfUserCheckedPromotedAuction(String promotedAuction, Auction auction) {
+        if (promotedAuction.equals("true")) {
+            return auction.getPromotedAuction();
+        }
+        return true;
+    }
+
+    private boolean checkWhatAuctionTypeUserChecked(String auctionType, Auction auction) {
+            if (auctionType.equals("buyNow")) {
+                return !auction.isAuction();
+            }
+            if (auctionType.equals("bidden")) {
+                return auction.isAuction();
+            }
+            return true;
+    }
 }
