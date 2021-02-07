@@ -1,6 +1,7 @@
 package com.gotit.controller;
 
 import com.gotit.dto.AuctionDTO;
+import com.gotit.dto.Message;
 import com.gotit.dto.UserDTO;
 import com.gotit.dto.MessageDTO;
 import com.gotit.service.CartService;
@@ -87,6 +88,12 @@ public class UserController {
     @GetMapping(path = "/profile/{email}", produces = "application/json")
     public UserDTO getUserData(@PathVariable("email") final String email) {
         return userService.convertUserAccountEntityToUserDTO(userService.getUser(email));
+    }
+
+    @GetMapping(produces = "application/json")
+    @RequestMapping( "/wake-up" )
+    public Message wakeUpServer() {
+        return new Message("ok");
     }
 
 
