@@ -20,6 +20,7 @@ public class Auction {
     @ManyToOne(fetch = FetchType.EAGER)
     private Category category;
     private String buyNowPrice;
+    private String startMinPrice;
     private boolean promotedAuction;
     private String localization;
     private LocalDate dateOfIssue;
@@ -42,7 +43,7 @@ public class Auction {
     public Auction() {
     }
 
-    public Auction(String title, String description, String photo, Category category, String buyNowPrice,
+    public Auction(String title, String description, String photo, Category category, String buyNowPrice, String startMinPrice,
                    boolean promotedAuction, String localization, LocalDate dateOfIssue, LocalDate endDate, int numberOfVisits,
                    boolean isFinished, UserAccount auctionOwner, boolean isAuction) {
         this.title = title;
@@ -50,6 +51,7 @@ public class Auction {
         this.photo = photo;
         this.category = category;
         this.buyNowPrice = buyNowPrice;
+        this.startMinPrice = startMinPrice;
         this.promotedAuction = promotedAuction;
         this.localization = localization;
         this.dateOfIssue = dateOfIssue;
@@ -172,6 +174,14 @@ public class Auction {
         isAuction = auction;
     }
 
+    public String getStartMinPrice() {
+        return startMinPrice;
+    }
+
+    public void setStartMinPrice(String startMinPrice) {
+        this.startMinPrice = startMinPrice;
+    }
+
     @Override
     public boolean equals(Object o) {
         if (this == o) return true;
@@ -186,6 +196,7 @@ public class Auction {
                 Objects.equals(photo, auction.photo) &&
                 Objects.equals(category, auction.category) &&
                 Objects.equals(buyNowPrice, auction.buyNowPrice) &&
+                Objects.equals(startMinPrice, auction.startMinPrice) &&
                 Objects.equals(localization, auction.localization) &&
                 Objects.equals(dateOfIssue, auction.dateOfIssue) &&
                 Objects.equals(endDate, auction.endDate) &&
@@ -196,6 +207,7 @@ public class Auction {
 
     @Override
     public int hashCode() {
-        return Objects.hash(id, title, description, photo, category, buyNowPrice, promotedAuction, localization, dateOfIssue, endDate, numberOfVisits, purchase, isFinished, auctionOwner, isAuction);
+        return Objects.hash(id, title, description, photo, category, buyNowPrice, startMinPrice, promotedAuction,
+                localization, dateOfIssue, endDate, numberOfVisits, purchase, isFinished, auctionOwner, isAuction);
     }
 }

@@ -1,7 +1,6 @@
 package com.gotit.controller;
 
 import com.gotit.dto.AuctionDTO;
-import com.gotit.dto.Message;
 import com.gotit.dto.UserDTO;
 import com.gotit.dto.MessageDTO;
 import com.gotit.service.CartService;
@@ -54,11 +53,12 @@ public class UserController {
                               @RequestParam("title") final String title,
                               @RequestParam("description") final String description,
                               @RequestParam("buyNowPrice") final String buyNowPrice,
+                              @RequestParam("minPrice") final String minPrice,
                               @RequestParam("promotedAuction")final  boolean promotedAuction,
                               @RequestParam("endDate") final String endDate,
                               @RequestParam("isAuction") final boolean isAuction,
                               @PathVariable("email") final String email) throws IOException {
-        userService.createUserAuction(imageFile, category, title, description, buyNowPrice, promotedAuction, endDate, isAuction, email);
+        userService.createUserAuction(imageFile, category, title, description, buyNowPrice, minPrice, promotedAuction, endDate, isAuction, email);
     }
 
 
@@ -92,8 +92,8 @@ public class UserController {
 
     @GetMapping(produces = "application/json")
     @RequestMapping( "/wake-up" )
-    public Message wakeUpServer() {
-        return new Message("ok");
+    public MessageDTO wakeUpServer() {
+        return new MessageDTO("ok");
     }
 
 

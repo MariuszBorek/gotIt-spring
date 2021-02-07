@@ -77,6 +77,7 @@ public class AuctionService {
                 .setPhoto(auction.getPhoto())
                 .setCategory(auction.getCategory().getName())
                 .setBuyNowPrice(auction.getBuyNowPrice())
+                .setStartMinPrice(auction.getStartMinPrice())
                 .setPromotedAuction(auction.getPromotedAuction())
                 .setLocalization(auction.getLocalization())
                 .setDateOfIssue(auction.getDateOfIssue())
@@ -165,14 +166,14 @@ public class AuctionService {
 
 
     public void createAuction(String photoName, String category, String title, String description,
-                              String buyNowPrice, boolean promotedAuction, String endDate,
+                              String buyNowPrice, String startMinPrice, boolean promotedAuction, String endDate,
                               UserAccount auctionOwner, boolean isAuction) {
 
         Category foundCategory = categoryRepository.findAll().stream()
                 .filter(e -> e.getName().equals(category))
                 .findFirst().orElseThrow();
 
-        Auction auction = new Auction(title, description, photoName, foundCategory, buyNowPrice,
+        Auction auction = new Auction(title, description, photoName, foundCategory, buyNowPrice, startMinPrice,
                 promotedAuction, auctionOwner.getAddress().getCity(), LocalDate.now(),
                 LocalDate.now().plusDays(Long.parseLong(endDate)), 0, false, auctionOwner, isAuction);
         auctionRepository.save(auction);

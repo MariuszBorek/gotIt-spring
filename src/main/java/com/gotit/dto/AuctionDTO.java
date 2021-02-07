@@ -11,6 +11,7 @@ public class AuctionDTO {
     private String photo;
     private String category;
     private String buyNowPrice;
+    private String startMinPrice;
     private boolean promotedAuction;
     private String localization;
     private LocalDate dateOfIssue;
@@ -24,14 +25,15 @@ public class AuctionDTO {
     }
 
     public AuctionDTO(String title, Long id, String description, String photo, String category, String buyNowPrice,
-                      boolean promotedAuction, String localization, LocalDate dateOfIssue, LocalDate endDate,
-                      int numberOfVisits, boolean finished, String owner, boolean isAuction) {
+                      String startMinPrice, boolean promotedAuction, String localization, LocalDate dateOfIssue,
+                      LocalDate endDate, int numberOfVisits, boolean finished, String owner, boolean isAuction) {
         this.id = id;
         this.title = title;
         this.description = description;
         this.photo = photo;
         this.category = category;
         this.buyNowPrice = buyNowPrice;
+        this.startMinPrice = startMinPrice;
         this.promotedAuction = promotedAuction;
         this.localization = localization;
         this.dateOfIssue = dateOfIssue;
@@ -168,6 +170,15 @@ public class AuctionDTO {
         return this;
     }
 
+    public String getStartMinPrice() {
+        return startMinPrice;
+    }
+
+    public AuctionDTO setStartMinPrice(String startMinPrice) {
+        this.startMinPrice = startMinPrice;
+        return this;
+    }
+
     public AuctionDTO build() {
         AuctionDTO auctionDTO = new AuctionDTO();
         auctionDTO.id = id;
@@ -176,6 +187,7 @@ public class AuctionDTO {
         auctionDTO.photo = photo;
         auctionDTO.category = category;
         auctionDTO.buyNowPrice = buyNowPrice;
+        auctionDTO.startMinPrice = startMinPrice;
         auctionDTO.promotedAuction = promotedAuction;
         auctionDTO.localization = localization;
         auctionDTO.dateOfIssue = dateOfIssue;

@@ -94,7 +94,7 @@ public class UserService implements UserDetailsService {
     }
 
     public void createUserAuction(MultipartFile imageFile, String category, String title, String description,
-                                  String buyNowPrice, boolean promotedAuction, String endDate, boolean isAuction, String email) {
+                                  String buyNowPrice,String startMinPrice, boolean promotedAuction, String endDate, boolean isAuction, String email) {
         String photoName = "placeholderproduct.jpg";
         if(!imageFile.isEmpty()) {
             try {
@@ -104,7 +104,12 @@ public class UserService implements UserDetailsService {
             }
         }
         UserAccount userAccount = userRepository.findByEmail(email).orElseThrow();
-        auctionService.createAuction(photoName, category, title, description, buyNowPrice, promotedAuction, endDate, userAccount, isAuction);
+        if(!startMinPrice.isEmpty() && Double.parseDouble(startMinPrice) > 0.0) {
+            auctionService.createAuction(photoName, category, title, description, buyNowPrice, startMinPrice, promotedAuction, endDate, userAccount, isAuction);
+        } else {
+            auctionService.createAuction(photoName, category, title, description, buyNowPrice, "0", promotedAuction, endDate, userAccount, isAuction);
+        }
+
     }
 
     public List<AuctionDTO> findUserPostedAuctions(String email) {
