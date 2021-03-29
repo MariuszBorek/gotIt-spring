@@ -21,11 +21,6 @@ import java.io.InputStream;
 import java.nio.file.Files;
 import java.nio.file.Path;
 import java.nio.file.Paths;
-import java.util.Optional;
-import java.util.zip.DataFormatException;
-import java.util.zip.Deflater;
-import java.util.zip.Inflater;
-
 
 @CrossOrigin("*")
 @RestController
@@ -46,7 +41,6 @@ public class FileController {
             e.printStackTrace();
         }
     }
-
 
     @PostMapping("/upload-avatar/{email}")
     public void uploadAvatar(@RequestParam("imageFile") MultipartFile imageFile,

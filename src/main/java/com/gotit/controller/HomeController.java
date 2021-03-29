@@ -1,9 +1,5 @@
 package com.gotit.controller;
 
-
-
-
-import com.gotit.dto.AuctionDTO;
 import com.gotit.dto.CategoryDTO;
 import com.gotit.service.AuctionService;
 import com.gotit.service.CategoryService;

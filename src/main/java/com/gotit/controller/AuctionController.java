@@ -2,7 +2,6 @@ package com.gotit.controller;
 
 import com.gotit.dto.AuctionDTO;
 import com.gotit.dto.OfferDTO;
-import com.gotit.entity.Auction;
 import com.gotit.service.AuctionService;
 import com.gotit.service.OfferService;
 import org.springframework.web.bind.annotation.*;
