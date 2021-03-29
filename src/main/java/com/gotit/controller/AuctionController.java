@@ -21,7 +21,7 @@ public class AuctionController {
         this.offerService = offerService;
     }
 
-    String url = " http://localhost:8080/auction/filter/o/false/all/nonSelect/0/0";
+//    String url = " http://localhost:8080/auction/filter/o/false/all/nonSelect/0/0";
 
     @GetMapping(path = "/filter/{phrase}/{promotedAuction}/{auctionType}/{category}/{minPrice}/{maxPrice}",
             produces = "application/json")
